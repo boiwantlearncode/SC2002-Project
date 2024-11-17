@@ -3,12 +3,13 @@ package Controllers.PatientController;
 import DataManager.AppointmentsRepo;
 import DataManager.UserRepo;
 import Models.*;
-import Views.Patient.PatientAppointmentView;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import Controllers.SmsController.SmsController;
 
 /**
  * The {@code PatientAppointmentController} class is responsible for managing patient appointment operations.
@@ -86,6 +87,9 @@ public class PatientAppointmentController {
         selectedDoctor.getAvailability().remove(appointmentTime);
         userRepo.setUsers(users);
         userRepo.saveData();
+
+        // Hiding the function until the day before presentation - since the my trial account got limited $$ to send SMS 
+        //SmsController.SendSMS("schedule", appointmentTime, selectedDoctor, patient);
     }
 
     /**
@@ -166,6 +170,9 @@ public class PatientAppointmentController {
             doctors.get(doctorsIndex).getAvailability().remove(newAppointmentTime);
             userRepo.saveData();
             System.out.println("Appointment rescheduled successfully.");
+
+            // Hiding the function until the day before presentation - since the my trial account got limited $$ to send SMS 
+            //SmsController.SendSMS("reschedule", newAppointmentTime, selectedDoctor, patient);
         } else {
             System.out.println("Invalid appointment ID or not authorized to reschedule.");
         }
@@ -186,13 +193,38 @@ public class PatientAppointmentController {
         List<Appointment> appointments = appointmentsRepo.getData();
         boolean appointmentFound = false;
         int size = appointments.size();
+        List<Doctor> doctors = new ArrayList<>();
+        List<User> users = new ArrayList<>();
+        UserRepo userRepo = new UserRepo();
+        userRepo.loadData();
+        users = userRepo.getData();
+    
+        for (User user : users) {
+            if (user instanceof Doctor doctor) {
+                doctors.add(doctor);
+            }
+        }
 
         for (int i = 0; i < size; i++) {
             Appointment apt = appointments.get(i);
+            LocalDateTime appointmentDateTime = apt.getAppointmentTime();
             if (apt.getAppointmentID().equals(appointmentID) && apt.getPatientID().equals(patient.getUserID())) {
+
+                // Retrieves doctor object
+                Doctor selectedDoctor = new Doctor();
+                for (Doctor doctor : doctors) {
+                    if (apt.getDoctorID().equals(doctor.getUserID())) {
+                        selectedDoctor = doctor;
+                        break;
+                    }
+                }
+                selectedDoctor.getAvailability().add(appointmentDateTime);
                 appointments.remove(i);
                 appointmentFound = true;
                 System.out.println("Appointment canceled successfully.");
+
+                // Hiding the function until the day before presentation - since the my trial account got limited $$ to send SMS 
+                //SmsController.SendSMS("cancel", appointmentDateTime, selectedDoctor , patient);
                 break;
             }
         }
@@ -200,8 +232,11 @@ public class PatientAppointmentController {
         if (!appointmentFound) {
             System.out.println("Invalid Appointment ID or you are not authorized to cancel this appointment.");
         } else {
+            userRepo.saveData();
             appointmentsRepo.setAppointments(appointments);
             appointmentsRepo.saveData();
         }
+
+
     }
 }

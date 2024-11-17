@@ -18,7 +18,12 @@ git status
 
 ## Changelog
 
-### V1.3 (LATEST)
+### V1.4 - Added SMS Service + Fixed CancelAppointment (LATEST)
+- Fixed CancelAppointment(): Doctor's availability timing will be added back whenever there is an appointment that is cancelled
+- Added SMS Service: Patient's scheduleAppointment(), rescheduleAppointment(), and cancelAppointment() will now send a text reminder message to the patient's phone number.
+ However, since my Twilio account is on the TRIAL version with limited credit $$, I have temporary disabled this function until our meeting/group presentation demo.
+
+### V1.3
 - Inside PatientController -> updateContactInfo(): Updated contact information is now persistent and also immediately reflected
 - Inside PatientAppointmentView -> scheduleAppointment(): Input validation for appointment scheduling i.e. correct datetime format and after current time
 - Inside DoctorView -> setAvailability(): Input validation for doctor availability i.e. correct datetime format and after current time
