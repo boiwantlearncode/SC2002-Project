@@ -4,16 +4,16 @@
 
 ## Best practices
 
-[1] Pull from remote repository before pushing changes to ensure up-to-date version.
-Run these commands in your shell environment to check for new changes in remote repository.
+1. Pull from remote repository before pushing changes to ensure up-to-date version.
 ```bash
+# Run these commands in your shell environment to check for new changes in remote repository.
 git remote update
 git status
 ```
 
-[2] Remove existing data from `users.txt` to reset user credentials.
+2. Remove existing data from `users.txt` to reset user credentials.
 
-[3] Put changes in messages of commits and/or changelog of README file
+3. Put changes in messages of commits and/or changelog of README file
 
 
 ## Changelog
