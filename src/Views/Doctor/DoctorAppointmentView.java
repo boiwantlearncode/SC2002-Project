@@ -8,6 +8,7 @@ import Models.Doctor;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -40,9 +41,11 @@ public class DoctorAppointmentView {
 
         // Filter appointments for the given doctor
         appointments.removeIf(appointment -> !appointment.getDoctorID().equals(doctor.getUserID()));
+        // Filter appointments to get only those of "Pending" status
+        appointments.removeIf(appointment -> !appointment.getStatus().equals("Pending"));
 
         if (appointments.isEmpty()) {
-            System.out.println("No appointments found!!");
+            System.out.println("No appointment requests found!!");
             return;
         }
 

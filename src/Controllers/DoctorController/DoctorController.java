@@ -244,6 +244,7 @@ public class DoctorController {
             prescription.add(new Prescription(existingMedication, "placed"));
             AppointmentOutcomeRecord appointmentOutcomeRecord = new AppointmentOutcomeRecord(
                     appointmentID, LocalDate.now(), serviceType, prescription, consultationNotes);
+            existingAppointment.setStatus("Completed");
             existingAppointment.setOutcomeRecord(appointmentOutcomeRecord);
             appointmentsRepo.setAppointments(appointments);
             appointmentsRepo.saveData();

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryRepo implements SerializableRepo<Inventory> {
-    private static final String INVENTORY_FILE = "src\\DataManager\\inventory.txt";
+    private static final String INVENTORY_FILE = "src/DataManager/inventory.txt";
     private Inventory inventory = new Inventory();
 
     @Override

@@ -18,7 +18,18 @@ git status
 
 ## Changelog
 
-### V1.4 - Added SMS Service + Fixed CancelAppointment (LATEST)
+### V1.5 (LATEST)
+- New patient appointment requests has status set to “Pending” 
+- PatientMenu choice “6” -> cancelAppointment(): Unable to cancel “Completed” appointments
+- PatientMenu choice “8” -> viewPastAppointmentOutcomeRecords(): Appointment records display correctly now, i.e. only “Completed” appointments
+- DoctorMenu choice “5” -> acceptOrDeclineAppointment(): Now only show appointments that are pending
+- DoctorMenu choice “7” -> DoctorController -> recordAppointmentOutcome(): When writing appointment outcome record, automatically sets status to “Completed”. 
+
+Potential issues to look at:
+- recordAppointmentOutcome can be called multiple times for the same appointment (i.e. doctor will create new appointmentOutcomeRecord for the same Appointment)
+- reschedule appointment to consider not just the datetime but the doctor code as well. Because two doctors may have clashing timeslots
+
+### V1.4 - Added SMS Service + Fixed CancelAppointment
 - Fixed CancelAppointment(): Doctor's availability timing will be added back whenever there is an appointment that is cancelled
 - Added SMS Service: Patient's scheduleAppointment(), rescheduleAppointment(), and cancelAppointment() will now send a text reminder message to the patient's phone number.
  However, since my Twilio account is on the TRIAL version with limited credit $$, I have temporary disabled this function until our meeting/group presentation demo.

@@ -61,7 +61,6 @@ public class PatientAppointmentView {
         PatientAppointmentController patientAppointmentController = new PatientAppointmentController();
         viewAvailableAppointmentSlots();
 
-
         Scanner scanner = new Scanner(System.in);
         String doctorID;
         String date;
@@ -82,13 +81,7 @@ public class PatientAppointmentView {
 
             try {
                 appointmentDateTime = LocalDateTime.parse(dateTimeString, formatter);
-
-                // Check if the entered datetime is after the current time
-                if (appointmentDateTime.isAfter(LocalDateTime.now())) {
-                    break; // Valid date and time, exit the loop
-                } else {
-                    System.out.println("The appointment datetime must be in the future. Please try again.");
-                }
+                break;
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid date or time format. Please enter the date in YYYY-MM-DD and time in HH:MM format.");
             }
@@ -106,11 +99,11 @@ public class PatientAppointmentView {
      */
 
     public void viewScheduledAppointments(Patient patient) throws IOException, ClassNotFoundException {
-        System.out.println("Scheduled Appointments:");
         AppointmentsRepo appointmentsRepo = new AppointmentsRepo();
         appointmentsRepo.loadData();
         List<Appointment> appointments = appointmentsRepo.getData();
 
+        System.out.println("Scheduled Appointments:");
         for (Appointment apt : appointments) {
             if (apt.getPatientID().equals(patient.getUserID())) {
                 System.out.println("ID: " + apt.getAppointmentID() + ", Doctor: " + apt.getDoctorID() +
@@ -131,15 +124,34 @@ public class PatientAppointmentView {
     public void rescheduleAppointment(Patient patient) throws IOException, ClassNotFoundException {
         PatientAppointmentController patientAppointmentController = new PatientAppointmentController();
         viewScheduledAppointments(patient);
+        viewAvailableAppointmentSlots();
+
+        Scanner scanner = new Scanner(System.in);
+        String appointmentID;
+        String date;
+        String time;
+        LocalDateTime newDateTime = null;
 
         System.out.print("Enter the Appointment ID to reschedule: ");
-        String appointmentID = scanner.nextLine();
-        System.out.print("Enter new date (YYYY-MM-DD): ");
-        String date = scanner.nextLine();
-        System.out.print("Enter new time (HH:MM): ");
-        String time = scanner.nextLine();
+        appointmentID = scanner.nextLine();
 
-        LocalDateTime newDateTime = LocalDateTime.parse(date + "T" + time);
+        while (true) {
+            System.out.print("Enter new date (YYYY-MM-DD): ");
+            date = scanner.nextLine();
+            System.out.print("Enter new time (HH:MM): ");
+            time = scanner.nextLine();
+
+            String dateTimeString = date + " " + time;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+            try {
+                newDateTime = LocalDateTime.parse(dateTimeString, formatter);
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date or time format. Please enter the date in YYYY-MM-DD and time in HH:MM format.");
+            }
+        }
+
         patientAppointmentController.rescheduleAppointment(patient, appointmentID, newDateTime);
     }
 
@@ -176,13 +188,16 @@ public class PatientAppointmentView {
         appointments.removeIf(apt -> !apt.getPatientID().equals(patient.getUserID()) || apt.getOutcomeRecord() == null);
 
         for (Appointment apt : appointments) {
-            AppointmentOutcomeRecord record = apt.getOutcomeRecord();
-            Prescription prescription = record.getPrescriptions().get(0);
-            Medication medication = prescription.getMedication();
+            // This assumes that if appointment status is "Completed" there must be an appointment outcome record
+            if (apt.getStatus().equals("Completed")) {
+                AppointmentOutcomeRecord record = apt.getOutcomeRecord();
+                Prescription prescription = record.getPrescriptions().get(0);
+                Medication medication = prescription.getMedication();
 
-            System.out.println("Services Provided: " + record.getServiceType() +
-                    " | Prescribed Medication: " + medication.getName() +
-                    " | Consultation Notes: " + record.getConsultaionNotes());
+                System.out.println("Services Provided: " + record.getServiceType() +
+                        " | Prescribed Medication: " + medication.getName() +
+                        " | Consultation Notes: " + record.getConsultaionNotes());
+            }
         }
     }
 }

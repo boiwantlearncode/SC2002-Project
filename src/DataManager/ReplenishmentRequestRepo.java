@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReplenishmentRequestRepo implements SerializableRepo<List<ReplenishmentRequest>> {
-    private static final String REPLENISHMENT_REQUESTS_FILE = "DataManager\\replenisment_requests.txt";
+    private static final String REPLENISHMENT_REQUESTS_FILE = "src/DataManager/replenishment_requests.txt";
     private List<ReplenishmentRequest> replenishmentRequests = new ArrayList<>();
 
     @Override

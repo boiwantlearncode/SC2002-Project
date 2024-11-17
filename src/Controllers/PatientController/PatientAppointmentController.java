@@ -77,7 +77,7 @@ public class PatientAppointmentController {
         List<Appointment> appointments = appointmentsRepo.getData();
 
         String appointmentID = "APT" + (appointments.size() + 1);
-        Appointment newAppointment = new Appointment(appointmentID, patient.getUserID(), selectedDoctor.getUserID(), appointmentTime, "Confirmed", new AppointmentOutcomeRecord());
+        Appointment newAppointment = new Appointment(appointmentID, patient.getUserID(), selectedDoctor.getUserID(), appointmentTime, "Pending", new AppointmentOutcomeRecord());
         appointments.add(newAppointment);
 
         System.out.println("Appointment scheduled successfully.");
@@ -209,6 +209,10 @@ public class PatientAppointmentController {
             Appointment apt = appointments.get(i);
             LocalDateTime appointmentDateTime = apt.getAppointmentTime();
             if (apt.getAppointmentID().equals(appointmentID) && apt.getPatientID().equals(patient.getUserID())) {
+                if (apt.getStatus().equals("Completed")) {
+                    System.out.println("Invalid action. Unable to delete completed appointment!");
+                    return;
+                }
 
                 // Retrieves doctor object
                 Doctor selectedDoctor = new Doctor();
