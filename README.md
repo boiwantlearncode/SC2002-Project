@@ -18,13 +18,13 @@ git status
 
 ## Changelog
 
-### V1.3
+### V1.3 (LATEST)
 - Inside PatientController -> updateContactInfo(): Updated contact information is now persistent and also immediately reflected
 - Inside PatientAppointmentView -> scheduleAppointment(): Input validation for appointment scheduling i.e. correct datetime format and after current time
 - Inside DoctorView -> setAvailability(): Input validation for doctor availability i.e. correct datetime format and after current time
 - Inside DoctorController -> viewPatientRecord(): Previously did not show medical record, now shows medical record.
 
-### V1.2 - input validation when Patient updates contact information (LATEST)
+### V1.2 - input validation when Patient updates contact information
 Modified updatePersonalInfo() in PatientView to have regex checks.
 
 ### V1.1 - with password hashing
