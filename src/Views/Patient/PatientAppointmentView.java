@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 /**
@@ -60,16 +61,38 @@ public class PatientAppointmentView {
         PatientAppointmentController patientAppointmentController = new PatientAppointmentController();
         viewAvailableAppointmentSlots();
 
-        System.out.print("Enter Doctor ID: ");
-        String doctorID = scanner.nextLine();
-        System.out.print("Enter date (YYYY-MM-DD): ");
-        String date = scanner.nextLine();
-        System.out.print("Enter time (HH:MM): ");
-        String time = scanner.nextLine();
 
-        String dateTimeString = date + " " + time;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime appointmentDateTime = LocalDateTime.parse(dateTimeString, formatter);
+        Scanner scanner = new Scanner(System.in);
+        String doctorID;
+        String date;
+        String time;
+        LocalDateTime appointmentDateTime = null;
+
+        System.out.print("Enter Doctor ID: ");
+        doctorID = scanner.nextLine();
+
+        while (true) {
+            System.out.print("Enter date (YYYY-MM-DD): ");
+            date = scanner.nextLine();
+            System.out.print("Enter time (HH:MM): ");
+            time = scanner.nextLine();
+
+            String dateTimeString = date + " " + time;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+            try {
+                appointmentDateTime = LocalDateTime.parse(dateTimeString, formatter);
+
+                // Check if the entered datetime is after the current time
+                if (appointmentDateTime.isAfter(LocalDateTime.now())) {
+                    break; // Valid date and time, exit the loop
+                } else {
+                    System.out.println("The appointment datetime must be in the future. Please try again.");
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date or time format. Please enter the date in YYYY-MM-DD and time in HH:MM format.");
+            }
+        }
 
         patientAppointmentController.scheduleAppointment(doctorID, appointmentDateTime, patient);
     }

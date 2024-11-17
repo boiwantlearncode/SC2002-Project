@@ -8,6 +8,7 @@ import Models.User;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -74,16 +75,36 @@ public class DoctorView {
     
     public void setAvailability(Doctor doctor) throws IOException, ClassNotFoundException {
         DoctorController doctorController = new DoctorController();
-        System.out.println("Enter date (YYYY-MM-DD) for doctor availability: ");
-        String date = scanner.nextLine();
-        System.out.println("Enter time (HH:MM) for doctor availability: ");
-        String time = scanner.nextLine();
 
-        String dateTimeString = date + " " + time;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime availableTime = LocalDateTime.parse(dateTimeString, formatter);
+        Scanner scanner = new Scanner(System.in);
+        String date;
+        String time;
+        LocalDateTime availableTime = null;
+
+        while (true) {
+            System.out.print("Enter date (YYYY-MM-DD) for doctor availability: ");
+            date = scanner.nextLine();
+            System.out.print("Enter time (HH:MM) for doctor availability: ");
+            time = scanner.nextLine();
+
+            String dateTimeString = date + " " + time;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+            try {
+                availableTime = LocalDateTime.parse(dateTimeString, formatter);
+
+                // Check if the entered datetime is after the current time
+                if (availableTime.isAfter(LocalDateTime.now())) {
+                    break; // Valid date and time, exit the loop
+                } else {
+                    System.out.println("Your available schedule must be in the future. Please try again.");
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date or time format. Please enter the date in YYYY-MM-DD and time in HH:MM format.");
+            }
+        }
+
         doctorController.setAvailability(doctor, availableTime);
-
         System.out.println("Availability added successfully.");
     }
 }

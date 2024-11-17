@@ -73,6 +73,7 @@ public class PatientView {
     public void updatePersonalInfo(Patient patient) throws IOException, ClassNotFoundException {
         PatientController patientController = new PatientController();
         String newPhone, newEmail;
+
         while (true) {
             System.out.print("Enter new phone number: ");
             newPhone = scanner.nextLine();
@@ -97,7 +98,6 @@ public class PatientView {
         }
 
         patientController.updateContactInfo(newPhone, newEmail, patient);
-        System.out.println("Contact information updated successfully.");
     }
 
     /**

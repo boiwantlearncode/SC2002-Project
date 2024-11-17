@@ -38,6 +38,11 @@ public class PatientController {
 
         for (; userIndex < size; userIndex++) {
             if (users.get(userIndex).getUserID().equals(patient.getUserID())) {
+                // Database
+                Patient existingPatient = (Patient) users.get(userIndex);
+                existingPatient.setPhoneNumber(phoneNumber);
+                existingPatient.setEmailAddress(emailAddress);
+                // State
                 patient.setPhoneNumber(phoneNumber);
                 patient.setEmailAddress(emailAddress);
                 userFound = true;

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppointmentsRepo implements SerializableRepo<List<Appointment>> {
-    private static final String APPOINTMENTS_FILE = "src\\DataManager\\appointments.txt";
+    private static final String APPOINTMENTS_FILE = "src/DataManager/appointments.txt";
     private List<Appointment> appointments = new ArrayList<>();
 
     @Override

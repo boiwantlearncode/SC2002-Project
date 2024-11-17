@@ -57,21 +57,7 @@ public class DoctorController {
             System.out.println("Patient not found!!");
             return;
         } else {
-            if (existingPatient.getMedicalRecord() != null) {
-                List<String> pastDiagnosis = existingPatient.getMedicalRecord().getPastDiagnosis();
-                List<String> pastTreatments = existingPatient.getMedicalRecord().getPastTreatment();
-
-                System.out.println("PAST DIAGNOSIS");
-                for (String diagnosis : pastDiagnosis) {
-                    System.out.println(diagnosis);
-                }
-                System.out.println("PAST TREATMENTS");
-                for (String treatment : pastTreatments) {
-                    System.out.println(treatment);
-                }
-            } else {
-                System.out.println("No medical record found!");
-            }
+            patientView.viewMedicalRecord(existingPatient);
         }
     }
 
@@ -114,6 +100,7 @@ public class DoctorController {
             medicalRecord.getPastTreatment().add(treatment);
             userRepo.setUsers(users);
             userRepo.saveData();
+            System.out.println("Medical record updated successfully.");
         }
     }
 
