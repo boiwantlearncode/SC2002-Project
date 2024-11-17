@@ -72,10 +72,29 @@ public class PatientView {
 
     public void updatePersonalInfo(Patient patient) throws IOException, ClassNotFoundException {
         PatientController patientController = new PatientController();
-        System.out.print("Enter new phone number: ");
-        String newPhone = scanner.nextLine();
-        System.out.print("Enter new email address: ");
-        String newEmail = scanner.nextLine();
+        String newPhone, newEmail;
+        while (true) {
+            System.out.print("Enter new phone number: ");
+            newPhone = scanner.nextLine();
+
+            if (newPhone != null && !newPhone.isEmpty() && newPhone.matches("\\d+")) {
+                System.out.println("Phone number is valid!");
+                break;
+            } else {
+                System.out.println("Invalid phone number. Please try again.");
+            }
+        }
+        while (true) {
+            System.out.print("Enter new email address: ");
+            newEmail = scanner.nextLine();
+
+            if (newEmail != null && newEmail.matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+                System.out.println("Email address is valid!");
+                break; // Exit the loop when the email is valid
+            } else {
+                System.out.println("Invalid email address. Please try again.");
+            }
+        }
 
         patientController.updateContactInfo(newPhone, newEmail, patient);
         System.out.println("Contact information updated successfully.");
