@@ -61,5 +61,33 @@ public class PasswordController {
         }
     }
 
+    public static void resetPassword(String userID) throws IOException, ClassNotFoundException { 
+        UserRepo userRepo = new UserRepo(); 
+        userRepo.loadData(); 
+        List<User> users = userRepo.getData(); 
+ 
+        for (User user : users) { 
+            if (user.getUserID().equalsIgnoreCase(userID)) { 
+                String defaultPassword = "password"; 
+                String salt = generateSalt(); 
+                String newHashedPassword = null; 
+                try { 
+                    newHashedPassword = hashPassword(defaultPassword, salt); 
+                } catch (NoSuchAlgorithmException e) { 
+                    e.printStackTrace(); 
+                } 
+                user.setPassword(newHashedPassword); 
+                user.setSalt(salt); 
+                user.setFirstLogin(true);  
+                userRepo.setUsers(users); 
+                userRepo.saveData(); 
+                System.out.println("Password for User ID '" + userID + "' has been reset to 'password'."); 
+                return;  
+            } 
+        } 
+        System.out.println("User with ID '" + userID + "' not found."); 
+    } 
+ 
 }
+
 

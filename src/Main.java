@@ -7,6 +7,7 @@ import Controllers.ShowOptions.ShowAdministratorMenu;
 import Controllers.ShowOptions.ShowDoctorMenu;
 import Controllers.ShowOptions.ShowPatientMenu;
 import Controllers.ShowOptions.ShowPharmacistMenu;
+import Controllers.AuthenticationController.PasswordController.PasswordController; 
 import Models.*;
 
 import java.io.IOException;
@@ -60,6 +61,7 @@ public class Main {
         while (true) {
             System.out.println("Enter 1 to login:");
             System.out.println("Enter 2 to exit:");
+            System.out.println("Enter 3 to Forget password:"); 
             System.out.print("Your Choice -> ");
             String choice = scanner.nextLine();
             switch (choice) {
@@ -68,6 +70,29 @@ public class Main {
                     break;
                 case "2":
                     System.exit(0);
+                    break;
+                    case "3": // Reset Password (Admin Only)
+                    System.out.println("Please log in as an administrator to reset a password.");
+                
+                    // Prompt for admin login
+                    User adminUser = LoginController.validateUser();
+                
+                    // Validate admin login
+                    if (adminUser instanceof Administrator && !adminUser.isFirstLogin()) {
+                        System.out.print("Enter the UserID to reset the password: ");
+                        String userID = scanner.nextLine(); // Get the target user's UserID
+                
+                        try {
+                            PasswordController.resetPassword(userID); // Reset the target user's password
+                        } catch (IOException | ClassNotFoundException e) {
+                            System.out.println("An error occurred while resetting the password.");
+                            e.printStackTrace();
+                        }
+                    } else if (adminUser instanceof Administrator && adminUser.isFirstLogin()) {
+                        System.out.println("You must change your password on first login before resetting other passwords.");
+                    } else {
+                        System.out.println("Access denied. Only administrators can reset passwords.");
+                    }
                     break;
                 default:
                     System.out.println("Invalid Input");

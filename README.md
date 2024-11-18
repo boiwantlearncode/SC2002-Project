@@ -18,7 +18,10 @@ git status
 
 ## Changelog
 
-### V1.6 (LATEST)
+### V1.7 - Reset Password (LATEST)
+- Added reset password feature at login screen (Main.java) - HALFWAY
+
+### V1.6
 - PatientAppointmentView -> viewAvailableAppointmentSlots() now shows "There are no available slots." if there are no available slots from doctors.
 - PatientAppointmentView -> viewScheduledAppointment() now shows "You have no upcoming appointments" if there are no upcoming appointments.
 - DoctorAppointmentController -> acceptDeclineAppointment() now shows the status for clarity.
