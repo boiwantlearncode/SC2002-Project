@@ -116,11 +116,7 @@ public class AdministratorStaffController {
 
     private void viewAllStaff() throws IOException, ClassNotFoundException {
         System.out.println("All Hospital Staff:");
-        for (User user : users) {
-            if (!(user instanceof Patient)) {
-                adminView.displayAllStaff();
-            }
-        }
+        adminView.displayAllStaff();
     }
 
     /**

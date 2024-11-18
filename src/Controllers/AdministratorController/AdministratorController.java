@@ -32,6 +32,19 @@ public class AdministratorController {
     }
 
     /**
+     * Displays all patient in the hospital.
+     * @param admin 
+     *
+     * @throws IOException            if an error occurs during data access.
+     * @throws ClassNotFoundException if the user data cannot be loaded.
+     */
+
+    public void viewAllPatient(Administrator admin) throws IOException, ClassNotFoundException {
+        System.out.println("All Patient:");
+        requestView.displayAllPatient();
+    }
+
+    /**
      * Loads replenishment requests from the repository.
      *
      * @throws IOException            if an error occurs during data loading.

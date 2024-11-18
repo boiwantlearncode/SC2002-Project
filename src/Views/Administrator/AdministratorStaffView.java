@@ -2,6 +2,7 @@ package Views.Administrator;
 
 import DataManager.UserRepo;
 import Models.Appointment;
+import Models.Patient;
 import Models.User;
 
 import java.io.IOException;
@@ -59,7 +60,9 @@ public class AdministratorStaffView {
         users = userRepo.getData();
 
         for (User user : users) {
-            System.out.println(user.getUserID() + " - " + user.getName() + " (" + user.getRole() + ")");
+            if (!(user instanceof Patient)) {
+                System.out.println(user.getUserID() + " - " + user.getName() + " (" + user.getRole() + ")");
+            }
         }
     }
 

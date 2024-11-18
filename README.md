@@ -18,7 +18,14 @@ git status
 
 ## Changelog
 
-### V2.0 (LATEST)
+### V2.1 (LATEST)
+- Fixed AdministratorStaffController -> viewAllStaff() from printing duplicates & now will only show all staffs, excluding patient.
+- Added AdministratorController -> viewAllPatient() to view all patients.
+
+Current issues:
+Pharmacist unable to view & prescribe medications from doctor's recordAppointmentOutcome.
+
+### V2.0 
 - DoctorAppointmentView -> viewUpcomingAppointments() now correctly shows all confirmed appointments ONLY.
 
 Current issues:

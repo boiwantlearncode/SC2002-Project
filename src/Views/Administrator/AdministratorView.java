@@ -1,9 +1,15 @@
 package Views.Administrator;
 
+import Models.Patient;
 import Models.ReplenishmentRequest;
+import Models.User;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import DataManager.UserRepo;
 
 /**
  * The {@code AdministratorView} class provides the view layer for handling
@@ -18,6 +24,26 @@ public class AdministratorView {
      */
 
     private Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Displays all patient in the hospital by fetching user data from the repository.
+     *
+     * @throws IOException            if an error occurs while loading data.
+     * @throws ClassNotFoundException if the data format is invalid.
+     */
+
+     public void displayAllPatient() throws IOException, ClassNotFoundException {
+        UserRepo userRepo = new UserRepo();
+        List<User> users = new ArrayList<>();
+        userRepo.loadData();
+        users = userRepo.getData();
+
+        for (User user : users) {
+            if ((user instanceof Patient)) {
+                System.out.println(user.getUserID() + " - " + user.getName() + " (" + user.getRole() + ")");
+            }
+        }
+    }
 
     /**
      * Displays all replenishment requests.

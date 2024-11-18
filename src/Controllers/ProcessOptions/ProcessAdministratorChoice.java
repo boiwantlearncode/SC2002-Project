@@ -57,10 +57,11 @@ public class ProcessAdministratorChoice implements ProcessUserChoice<Administrat
     @Override
     public void processUserChoice(Administrator administrator, String choice) throws IOException, ClassNotFoundException {
         switch (choice) {
-            case "1": administratorStaffController.manageHospitalStaff(admin); break;
-            case "2": administratorStaffController.viewAppointmentsDetails(admin); break;
-            case "3": administratorInventoryController.manageInventory(admin); break;
-            case "4": administratorController.approveReplenishmentRequests(admin); break;
+            case "1": administratorController.viewAllPatient(admin); break;
+            case "2": administratorStaffController.manageHospitalStaff(admin); break;
+            case "3": administratorStaffController.viewAppointmentsDetails(admin); break;
+            case "4": administratorInventoryController.manageInventory(admin); break;
+            case "5": administratorController.approveReplenishmentRequests(admin); break;
             default: System.out.println("Invalid choice. Please try again.");
         }
     }
