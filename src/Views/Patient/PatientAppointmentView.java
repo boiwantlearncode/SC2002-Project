@@ -208,7 +208,7 @@ public class PatientAppointmentView {
 
                 System.out.println("Services Provided: " + record.getServiceType() +
                         " | Prescribed Medication: " + medication.getName() +
-                        " | Consultation Notes: " + record.getConsultaionNotes());
+                        " | Consultation Notes: " + record.getConsultationNotes());
             }
         }
     }

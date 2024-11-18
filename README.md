@@ -18,7 +18,13 @@ git status
 
 ## Changelog
 
-### V1.8 - Reset Password (LATEST)
+### V1.9 (LATEST)
+- PatientView -> viewMedicalRecord() for past treatment/diagnosis, will be displayed correctly once doctor recordAppointmentOutcome().
+
+Current issues:
+Pharmacist unable to view & prescribe medications from doctor's recordAppointmentOutcome.
+
+### V1.8 - Reset Password
 - Added reset password feature at login screen (Main.java) - FIXED
 
 ### V1.7 - Reset Password 

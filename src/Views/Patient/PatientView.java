@@ -2,9 +2,17 @@ package Views.Patient;
 
 import Controllers.AuthenticationController.PasswordController.PasswordController;
 import Controllers.PatientController.PatientController;
+import DataManager.AppointmentsRepo;
+import Models.Appointment;
+import Models.AppointmentOutcomeRecord;
 import Models.Patient;
+import Models.Prescription;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -31,9 +39,11 @@ public class PatientView {
      * Displays the patient's medical record, including personal details, past diagnoses, and treatments.
      *
      * @param patient the {@code Patient} whose medical record is to be viewed.
+     * @throws IOException 
+     * @throws ClassNotFoundException 
      */
-
-    public void viewMedicalRecord(Patient patient) {
+     
+    public void viewMedicalRecord(Patient patient) throws ClassNotFoundException, IOException {
         System.out.println("Medical Record for " + patient.getName());
         System.out.println("Patient ID: " + patient.getUserID());
         System.out.println("Date of Birth: " + patient.getDateOfBirth());
@@ -44,20 +54,45 @@ public class PatientView {
         System.out.println("  Email: " + patient.getEmailAddress());
         System.out.println("Past Diagnoses:");
 
-        if (patient.getMedicalRecord() == null || patient.getMedicalRecord().getPastDiagnosis() == null) {
-            System.out.println("  No Past Diagnoses");
-        } else {
-            for (String diagnosis : patient.getMedicalRecord().getPastDiagnosis()) {
-                System.out.println("- " + diagnosis);
+        AppointmentsRepo appointmentsRepo = new AppointmentsRepo();
+        appointmentsRepo.loadData();
+        List<Appointment> appointments = appointmentsRepo.getData();
+
+        Map<String, List<String>> diagnosesAndTreatmentsMap = new HashMap<>();
+
+        for (Appointment appointment : appointments) {
+            if (appointment.getPatientID().equals(patient.getUserID()) && appointment.getOutcomeRecord() != null) {
+                AppointmentOutcomeRecord outcomeRecord = appointment.getOutcomeRecord();
+                String appointmentID = appointment.getAppointmentID();
+
+                if (!diagnosesAndTreatmentsMap.containsKey(appointmentID)) {
+                    diagnosesAndTreatmentsMap.put(appointmentID, new ArrayList<>());
+                }
+
+                if (outcomeRecord.getConsultationNotes() != null) {
+                    diagnosesAndTreatmentsMap.get(appointmentID).add("Diagnosis: " + outcomeRecord.getConsultationNotes());
+                }
+
+                if (outcomeRecord.getPrescriptions() != null) {
+                    for (Prescription prescription : outcomeRecord.getPrescriptions()) {
+                        diagnosesAndTreatmentsMap.get(appointmentID).add("Treatment: " + prescription.getMedication().getName());
+                    }
+                }
             }
         }
 
-        System.out.println("Past Treatments:");
-        if (patient.getMedicalRecord() == null || patient.getMedicalRecord().getPastTreatment() == null) {
-            System.out.println("  No Past Treatments");
+        if (diagnosesAndTreatmentsMap.isEmpty()) {
+            System.out.println("No Past Diagnoses or Treatments");
         } else {
-            for (String treatment : patient.getMedicalRecord().getPastTreatment()) {
-                System.out.println("- " + treatment);
+            for (Map.Entry<String, List<String>> entry : diagnosesAndTreatmentsMap.entrySet()) {
+                String appointmentID = entry.getKey();
+                List<String> details = entry.getValue();
+
+                System.out.println("Appointment ID: " + appointmentID);
+                for (String detail : details) {
+                    System.out.println("- " + detail);
+                }
+                System.out.println();
             }
         }
     }

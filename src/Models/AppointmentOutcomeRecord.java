@@ -154,7 +154,7 @@ public class AppointmentOutcomeRecord implements Serializable {
      * @return the consultation notes.
      */
 
-    public String getConsultaionNotes() {
+    public String getConsultationNotes() {
         return consultaionNotes;
     }
 

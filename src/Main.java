@@ -71,19 +71,27 @@ public class Main {
                 case "2":
                     System.exit(0);
                     break;
-                case "3": 
+                case "3":
                     System.out.println("Please log in as an administrator to reset a password.");
+                
                     User adminUser = LoginController.validateUser();
-                    if (adminUser instanceof Administrator) {
+                
+                    if (adminUser instanceof Administrator && !adminUser.isFirstLogin()) {
                         System.out.print("Enter the UserID to reset the password: ");
-                        String userID = scanner.nextLine(); // Get the target user's UserID
-                        PasswordController.resetPassword(userID); // Reset the target user's password
+                        String userID = scanner.nextLine();
+                
+                        try {
+                            PasswordController.resetPassword(userID);
+                        } catch (IOException | ClassNotFoundException e) {
+                            System.out.println("An error occurred while resetting the password.");
+                            e.printStackTrace();
+                        }
+                    } else if (adminUser instanceof Administrator && adminUser.isFirstLogin()) {
+                        System.out.println("You must change your password on first login before resetting other passwords.");
+                    } else {
+                        System.out.println("Access denied. Only administrators can reset passwords.");
                     }
-                    else 
-                    {
-                        System.out.println("Access is denied. Only administrators can reset passwords.");
-                    }
-                    continue;
+                    break;
                 default:
                     System.out.println("Invalid Input");
                     continue;
