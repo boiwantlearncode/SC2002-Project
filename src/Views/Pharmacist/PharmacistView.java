@@ -1,12 +1,17 @@
 package Views.Pharmacist;
 
 import Controllers.PharmacistController.PharmacistController;
+import DataManager.AppointmentsRepo;
 import DataManager.InventoryRepo;
+import Models.Appointment;
+import Models.AppointmentOutcomeRecord;
 import Models.Inventory;
 import Models.Medication;
 import Models.Pharmacist;
+import Models.Prescription;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -31,8 +36,44 @@ public class PharmacistView {
      * @param pharmacist the {@code Pharmacist} whose appointment records are to be viewed.
      */
 
-    public void viewAppointmentRecordOutcome(Pharmacist pharmacist) {
-        // Not implemented yet
+    public void viewAppointmentRecordOutcome(Pharmacist pharmacist) throws IOException, ClassNotFoundException {
+        AppointmentsRepo appointmentsRepo = new AppointmentsRepo();
+        appointmentsRepo.loadData();
+        List<Appointment> appointments = appointmentsRepo.getData();
+
+        appointments.removeIf(apt -> apt.getOutcomeRecord() == null || !apt.getStatus().equals("Completed"));
+
+        boolean hasPending = false;      
+        System.out.println("=== Appointments with Pending Prescriptions ===");
+
+        for (Appointment apt : appointments) {
+            AppointmentOutcomeRecord record = apt.getOutcomeRecord();
+
+            List<Prescription> pendingPrescriptions = new ArrayList<>();
+            for (Prescription prescription : record.getPrescriptions()) {
+                if (prescription.getStatus().equals("Pending")) {
+                    pendingPrescriptions.add(prescription);
+                    hasPending = true;
+                }
+            }
+
+            if (!pendingPrescriptions.isEmpty()) {
+                System.out.println("Patient ID: " + apt.getPatientID() +
+                        " | Appointment ID: " + apt.getAppointmentID() +
+                        " | Services Provided: " + record.getServiceType() +
+                        " | Consultation Notes: " + record.getConsultationNotes());
+                System.out.println("Prescriptions:");
+                for (Prescription prescription : pendingPrescriptions) {
+                    Medication medication = prescription.getMedication();
+                    System.out.println(" - Medication: " + medication.getName() +
+                            " | Status: " + prescription.getStatus());
+                }
+            }
+        }
+
+        if (!hasPending) {
+            System.out.println("No appointments with pending prescription.");
+        }
     }
 
     /**

@@ -218,13 +218,21 @@ public class DoctorController {
 
             Medication existingMedication = null;
 
+            List<Prescription> prescriptions = new ArrayList<>();
+
             while (true) {
                 System.out.println("MEDICATION IN THE INVENTORY");
                 for (Medication medication : medications) {
                     System.out.println(medication.getName());
                 }
-                System.out.println("Enter Medication name: ");
+
+                System.out.println("Enter Medication name (or type 'done' to finish): ");
                 String medicationName = scanner.nextLine();
+
+                if (medicationName.equalsIgnoreCase("done")) {
+                    break;
+                }
+
                 for (Medication medication : medications) {
                     if (medication.getName().equals(medicationName)) {
                         existingMedication = medication;
@@ -235,15 +243,17 @@ public class DoctorController {
                 if (existingMedication == null) {
                     System.out.println("Medication not found!");
                     continue;
-                } else {
-                    break;
                 }
+    
+                prescriptions.add(new Prescription(existingMedication, "Pending"));
             }
 
-            List<Prescription> prescription = new ArrayList<>();
-            prescription.add(new Prescription(existingMedication, "placed"));
+            if (prescriptions.isEmpty()) {
+                System.out.println("No prescriptions added. Proceeding without prescriptions.");
+            }
+
             AppointmentOutcomeRecord appointmentOutcomeRecord = new AppointmentOutcomeRecord(
-                    appointmentID, LocalDate.now(), serviceType, prescription, consultationNotes);
+                    appointmentID, LocalDate.now(), serviceType, prescriptions, consultationNotes);
             existingAppointment.setStatus("Completed");
             existingAppointment.setOutcomeRecord(appointmentOutcomeRecord);
             appointmentsRepo.setAppointments(appointments);

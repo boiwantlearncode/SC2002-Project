@@ -52,9 +52,42 @@ public class PharmacistController {
                 System.out.println("Appointment Outcome Record not found!!");
                 return;
             } else {
-                List<Prescription> prescription = appointmentOutcomeRecord.getPrescriptions();
-                prescription.get(0).setStatus("dispensed");
+                List<Prescription> prescriptions = appointmentOutcomeRecord.getPrescriptions();
 
+                InventoryRepo inventoryRepo = new InventoryRepo();
+                inventoryRepo.loadData();
+                Inventory inventory = inventoryRepo.getData();
+                List<Medication> medications = inventory.getMedications();
+
+                for (Prescription prescription : prescriptions) {
+                    if (prescription.getStatus().equals("Pending")) {
+                        Medication prescribedMedication = prescription.getMedication();
+    
+                        Medication inventoryMedication = null;
+                        for (Medication medication : medications) {
+                            if (medication.getName().equals(prescribedMedication.getName())) {
+                                inventoryMedication = medication;
+                                break;
+                            }
+                        }
+    
+                        if (inventoryMedication == null) {
+                            System.out.println("Medication " + prescribedMedication.getName() + " not found in inventory!");
+                            continue;
+                        }
+
+                        int currentStock = inventoryMedication.getStockLevel();
+                        if (currentStock > 0) {
+                            inventoryMedication.setStockLevel(currentStock - 1);
+                            prescription.setStatus("Dispensed");
+                            System.out.println("Medication " + prescribedMedication.getName() + " dispensed. Remaining stock: " + inventoryMedication.getStockLevel());
+                        } else {
+                            System.out.println("Medication " + prescribedMedication.getName() + " is out of stock!");
+                        }
+                    }
+                }
+                inventoryRepo.saveData();
+                
                 appointmentsRepo.setAppointments(appointments);
                 appointmentsRepo.saveData();
             }

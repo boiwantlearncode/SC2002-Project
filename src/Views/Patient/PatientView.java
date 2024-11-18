@@ -74,8 +74,15 @@ public class PatientView {
                 }
 
                 if (outcomeRecord.getPrescriptions() != null) {
+                    List<String> medicationDetails = new ArrayList<>();
                     for (Prescription prescription : outcomeRecord.getPrescriptions()) {
-                        diagnosesAndTreatmentsMap.get(appointmentID).add("Treatment: " + prescription.getMedication().getName());
+                        String medicationDetail = "Medication: " + prescription.getMedication().getName() +
+                                " (Status: " + prescription.getStatus() + ")";
+                        medicationDetails.add(medicationDetail);
+                    }
+                    if (!medicationDetails.isEmpty()) {
+                        diagnosesAndTreatmentsMap.get(appointmentID).add("Prescriptions:");
+                        diagnosesAndTreatmentsMap.get(appointmentID).addAll(medicationDetails);
                     }
                 }
             }

@@ -199,16 +199,26 @@ public class PatientAppointmentView {
 
         appointments.removeIf(apt -> !apt.getPatientID().equals(patient.getUserID()) || apt.getOutcomeRecord() == null);
 
+        if (appointments.isEmpty()) {
+            System.out.println("No past appointments with recorded outcomes.");
+            return;
+        }
+
+        System.out.println("=== Past Appointment Outcome Records ===");
         for (Appointment apt : appointments) {
-            // This assumes that if appointment status is "Completed" there must be an appointment outcome record
             if (apt.getStatus().equals("Completed")) {
                 AppointmentOutcomeRecord record = apt.getOutcomeRecord();
-                Prescription prescription = record.getPrescriptions().get(0);
-                Medication medication = prescription.getMedication();
 
-                System.out.println("Services Provided: " + record.getServiceType() +
-                        " | Prescribed Medication: " + medication.getName() +
-                        " | Consultation Notes: " + record.getConsultationNotes());
+                System.out.println("Appointment ID: " + apt.getAppointmentID());
+                System.out.println("Services Provided: " + record.getServiceType());
+                System.out.println("Consultation Notes: " + record.getConsultationNotes());
+
+                System.out.println("Prescribed Medications:");
+                for (Prescription prescription : record.getPrescriptions()) {
+                    Medication medication = prescription.getMedication();
+                    System.out.println("- " + medication.getName() + " (Status: " + prescription.getStatus() + ")");
+                }
+                System.out.println();
             }
         }
     }

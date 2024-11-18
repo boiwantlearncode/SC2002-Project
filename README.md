@@ -18,7 +18,14 @@ git status
 
 ## Changelog
 
-### V2.3 (LATEST)
+### V2.4 (LATEST)
+- viewAppointmentRecordOutcome(). Pharmacist can now view all appointments with pending medicine for dispersion.
+- updatePrescriptionStatus(). Once medication for appointment is dispensed (updated), medication inventory will -1 accordingly.
+- Doctor recordAppointmentOutcome() can now issue zero to many medicine for an appointment.
+- Patient viewMedicalRecord() can now view the list of medications for that specific appointment.
+- Patient viewPastAppointmentOutcomeRecords() can now view the list of medications for that specific appointment as well.
+
+### V2.3 
 - Exception handling for stock level, updated stock level, medication name for Administrator #4, #5 and Pharmacist #4
 - Replenishment ID no longer null
 - Approve replenishment request will add to medication stock level
