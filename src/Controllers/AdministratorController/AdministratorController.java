@@ -17,6 +17,7 @@ public class AdministratorController {
     private AdministratorView requestView;
     private List<ReplenishmentRequest> requests;
     private ReplenishmentRequestRepo requestRepo;
+    AdministratorInventoryController administratorInventoryController = new AdministratorInventoryController();
 
     /**
      * Initializes the {@code AdministratorController}.
@@ -61,27 +62,34 @@ public class AdministratorController {
      * Displays all requests and prompts the administrator to approve or skip unapproved requests.
      *
      * @param admin the {@code Administrator} making the approvals.
-     * @throws IOException if an error occurs while saving approvals.
+     * @throws IOException            if an error occurs while saving approvals.
+     * @throws ClassNotFoundException if an error occurs when calling replenishMedication()
      */
 
-    public void approveReplenishmentRequests(Administrator admin) throws IOException {
+    public void approveReplenishmentRequests(Administrator admin) throws IOException, ClassNotFoundException {
+        loadRequests();
         requestView.displayReplenishmentRequests(requests);
 
         for (ReplenishmentRequest request : requests) {
-            if (!request.isApproved()) {  // Only prompt for unapproved requests
-                String decision = requestView.getApprovalDecision(request.getId());
+            try {
+                if (!request.isApproved()) {  // Only prompt for unapproved requests
+                    String decision = requestView.getApprovalDecision(request.getId());
 
-                if (decision.equals("yes")) {
-                    request.setApproved(true);
-                    requestView.displayApprovalSuccess(request.getId());
-                    saveRequests();  // Save each time a request is approved
-                } else if (decision.equals("no")) {
-                    System.out.println("Skipping approval for request ID " + request.getId());
+                    if (decision.equals("yes")) {
+                        administratorInventoryController.replenishMedication(request.getMedication().getName(), request.getQuantity());
+                        request.setApproved(true);
+                        requestView.displayApprovalSuccess(request.getId());
+                        saveRequests();  // Save each time a request is approved
+                    } else if (decision.equals("no")) {
+                        System.out.println("Skipping approval for request ID " + request.getId());
+                    } else {
+                        requestView.displayApprovalFailure(request.getId());
+                    }
                 } else {
-                    requestView.displayApprovalFailure(request.getId());
+                    requestView.displayInvalidRequestMessage(request.getId());
                 }
-            } else {
-                requestView.displayInvalidRequestMessage(request.getId());
+            } catch (ClassNotFoundException e) {
+                System.out.println(e.getMessage());
             }
         }
     }

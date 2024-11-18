@@ -18,7 +18,14 @@ git status
 
 ## Changelog
 
-### V2.2 (LATEST)
+### V2.3 (LATEST)
+- Exception handling for stock level, updated stock level, medication name for Administrator #4, #5 and Pharmacist #4
+- Replenishment ID no longer null
+- Approve replenishment request will add to medication stock level
+- New method AdministratorInventoryController -> replenishMedication(). It is called by AdministratorController -> approveReplenishmentRequests()
+
+
+### V2.2
 - Fixed showAdministratorMenu.
 - Fixed administatorStaffController -> updateStaff(). Now it correctly updates instead of creating a new user.
 

@@ -96,53 +96,65 @@ public class AdministratorInventoryController {
     /**
      * Adds a new medication to the inventory.
      *
-     * @throws IOException            if an error occurs while saving data.
-     * @throws ClassNotFoundException if the inventory data cannot be loaded.
+     * @throws IOException              if an error occurs while saving data.
+     * @throws ClassNotFoundException   if the inventory data cannot be loaded.
+     * @throws IllegalArgumentException if invalid input
      */
 
-    private void addNewMedication() throws IOException, ClassNotFoundException {
+    private void addNewMedication() throws IOException, ClassNotFoundException, IllegalArgumentException {
         inventoryRepo.loadData();
         Inventory inventory = inventoryRepo.getData();
         List<Medication> medications = inventory.getMedications();
+        String name;
+        int initialStock, lowStockAlertLevel;
 
-        String name = inventoryView.getMedicationName();
-        int initialStock = inventoryView.getInitialStock();
-        int lowStockAlertLevel = inventoryView.getLowStockAlertLevel();
+        try {
+            name = inventoryView.getMedicationName();
+            initialStock = inventoryView.getInitialStock();
+            lowStockAlertLevel = inventoryView.getLowStockAlertLevel();
 
-        Medication newMedication = new Medication(name, initialStock, lowStockAlertLevel);
-        medications.add(newMedication);
-        inventoryView.displayMedicationAdded();
+            Medication newMedication = new Medication(name, initialStock, lowStockAlertLevel);
+            medications.add(newMedication);
+            inventoryView.displayMedicationAdded();
 
-        // Save the updated inventory
-        inventoryRepo.setInventory(inventory);
-        inventoryRepo.saveData();
+            // Save the updated inventory
+            inventoryRepo.setInventory(inventory);
+            inventoryRepo.saveData();
+        } catch (IOException | IllegalArgumentException e) {
+            inventoryView.displayError(e.getMessage());
+        }
+
     }
 
     /**
      * Updates the stock level of an existing medication.
      *
-     * @throws IOException            if an error occurs while saving data.
-     * @throws ClassNotFoundException if the inventory data cannot be loaded.
+     * @throws IOException              if an error occurs while saving data.
+     * @throws ClassNotFoundException   if the inventory data cannot be loaded.
+     * @throws IllegalArgumentException if invalid input
      */
 
-    private void updateMedicationStock() throws IOException, ClassNotFoundException {
+    private void updateMedicationStock() throws IOException, ClassNotFoundException, IllegalArgumentException {
         inventoryRepo.loadData();
         Inventory inventory = inventoryRepo.getData();
-        List<Medication> medications = inventory.getMedications();
 
-        String name = inventoryView.getMedicationName();
-        Medication medication = findMedicationByName(name);
+        try {
+            String name = inventoryView.getMedicationName();
+            Medication medication = findMedicationByName(inventory, name);
 
-        if (medication != null) {
-            int newStockLevel = inventoryView.getUpdatedStockLevel();
-            medication.setStockLevel(newStockLevel);
-            inventoryView.displayMedicationUpdated();
+            if (medication != null) {
+                int newStockLevel = inventoryView.getUpdatedStockLevel();
+                medication.setStockLevel(newStockLevel);
+                inventoryView.displayMedicationUpdated();
 
-            // Save the updated inventory
-            inventoryRepo.setInventory(inventory);
-            inventoryRepo.saveData();
-        } else {
-            inventoryView.displayError("Medication not found.");
+                // Save the updated inventory
+                inventoryRepo.setInventory(inventory);
+                inventoryRepo.saveData();
+            } else {
+                inventoryView.displayError("Medication not found.");
+            }
+        } catch (IOException | IllegalArgumentException e) {
+            inventoryView.displayError(e.getMessage());
         }
     }
 
@@ -158,18 +170,23 @@ public class AdministratorInventoryController {
         Inventory inventory = inventoryRepo.getData();
         List<Medication> medications = inventory.getMedications();
 
-        String name = inventoryView.getMedicationName();
-        Medication medication = findMedicationByName(name);
 
-        if (medication != null) {
-            medications.remove(medication);
-            inventoryView.displayMedicationDeleted();
+        try {
+            String name = inventoryView.getMedicationName();
+            Medication medication = findMedicationByName(inventory, name);
 
-            // Save the updated inventory
-            inventoryRepo.setInventory(inventory);
-            inventoryRepo.saveData();
-        } else {
-            inventoryView.displayError("Medication not found.");
+            if (medication != null) {
+                medications.remove(medication);
+                inventoryView.displayMedicationDeleted();
+
+                // Save the updated inventory
+                inventoryRepo.setInventory(inventory);
+                inventoryRepo.saveData();
+            } else {
+                inventoryView.displayError("Medication not found.");
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            inventoryView.displayError(e.getMessage());
         }
     }
 
@@ -182,9 +199,7 @@ public class AdministratorInventoryController {
      * @throws ClassNotFoundException if the inventory data cannot be loaded.
      */
 
-    private Medication findMedicationByName(String name) throws IOException, ClassNotFoundException {
-        inventoryRepo.loadData();
-        Inventory inventory = inventoryRepo.getData();
+    private Medication findMedicationByName(Inventory inventory, String name) throws IOException, ClassNotFoundException {
         List<Medication> medications = inventory.getMedications();
 
         for (Medication med : medications) {
@@ -193,5 +208,34 @@ public class AdministratorInventoryController {
             }
         }
         return null;
+    }
+
+    /**
+     * Updates the stock level of an existing medication.
+     *
+     * @throws IOException            if an error occurs while saving data.
+     * @throws ClassNotFoundException if the inventory data cannot be loaded.
+     */
+    public void replenishMedication(String name, int amount) throws IOException, ClassNotFoundException {
+        inventoryRepo.loadData();
+        Inventory inventory = inventoryRepo.getData();
+
+        try {
+            Medication medication = findMedicationByName(inventory, name);
+
+            if (medication != null) {
+                int newStockLevel = medication.getStockLevel() + amount;
+                medication.setStockLevel(newStockLevel);
+                inventoryView.displayMedicationUpdated();
+
+                // Save the updated inventory
+                inventoryRepo.setInventory(inventory);
+                inventoryRepo.saveData();
+            } else {
+                inventoryView.displayError("Medication not found.");
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            inventoryView.displayError(e.getMessage());
+        }
     }
 }

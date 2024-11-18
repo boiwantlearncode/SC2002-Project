@@ -2,6 +2,7 @@ package Views.Administrator;
 
 import Models.Medication;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,9 +51,14 @@ public class AdminsitratorInventoryView {
      * @return the name of the medication as a {@code String}.
      */
 
-    public String getMedicationName() {
+    public String getMedicationName() throws IOException {
         System.out.print("Enter medication name: ");
-        return scanner.nextLine();
+        String name = scanner.nextLine();
+
+        if (name == null || name.isEmpty()) {
+            throw new IOException("Medication name cannot be empty");
+        }
+        return name;
     }
 
     /**
@@ -61,9 +67,20 @@ public class AdminsitratorInventoryView {
      * @return the initial stock level as an {@code int}.
      */
 
-    public int getInitialStock() {
+    public int getInitialStock() throws IOException, IllegalArgumentException {
         System.out.print("Enter initial stock: ");
-        return Integer.parseInt(scanner.nextLine());
+        String input = scanner.nextLine();
+
+        if (input.isEmpty()) {
+            throw new IllegalArgumentException("Stock value cannot be empty.");
+        }
+
+        int initialStock = Integer.parseInt(input);
+        if (initialStock < 0) {
+            throw new IllegalArgumentException("Stock value cannot be negative.");
+        }
+
+        return initialStock;
     }
 
     /**
@@ -72,9 +89,20 @@ public class AdminsitratorInventoryView {
      * @return the low stock alert level as an {@code int}.
      */
 
-    public int getLowStockAlertLevel() {
+    public int getLowStockAlertLevel() throws IOException, IllegalArgumentException {
         System.out.print("Enter low stock alert level: ");
-        return Integer.parseInt(scanner.nextLine());
+        String input = scanner.nextLine();
+
+        if (input.isEmpty()) {
+            throw new IllegalArgumentException("Stock value cannot be empty.");
+        }
+
+        int lowStockAlertLevel = Integer.parseInt(input);
+        if (lowStockAlertLevel < 0) {
+            throw new IllegalArgumentException("Stock value cannot be negative.");
+        }
+
+        return lowStockAlertLevel;
     }
 
     /**
@@ -83,9 +111,20 @@ public class AdminsitratorInventoryView {
      * @return the updated stock level as an {@code int}.
      */
 
-    public int getUpdatedStockLevel() {
+    public int getUpdatedStockLevel() throws IOException, IllegalArgumentException {
         System.out.print("Enter new stock level: ");
-        return Integer.parseInt(scanner.nextLine());
+        String input = scanner.nextLine();
+
+        if (input.isEmpty()) {
+            throw new IllegalArgumentException("Stock value cannot be empty.");
+        }
+
+        int newStockLevel = Integer.parseInt(input);
+        if (newStockLevel < 0) {
+            throw new IllegalArgumentException("Stock value cannot be negative.");
+        }
+
+        return newStockLevel;
     }
 
     /**

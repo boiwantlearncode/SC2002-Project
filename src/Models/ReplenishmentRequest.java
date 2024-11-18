@@ -1,6 +1,10 @@
 package Models;
 
+import DataManager.ReplenishmentRequestRepo;
+
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * The {@code ReplenishmentRequest} class represents a request to replenish the stock of a specific medication.
@@ -51,9 +55,20 @@ public class ReplenishmentRequest implements Serializable {
      */
 
     public ReplenishmentRequest(Medication medication, int quantity, boolean approved) {
-        this.medication = medication;
-        this.quantity = quantity;
-        this.approved = approved;
+        ReplenishmentRequestRepo replenishmentRequests = new ReplenishmentRequestRepo();
+        List<ReplenishmentRequest> requests;
+        try {
+            replenishmentRequests.loadData();
+            requests = replenishmentRequests.getData();
+
+            this.id = "REQ" + (requests.size() + 1);
+            this.medication = medication;
+            this.quantity = quantity;
+            this.approved = approved;
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error creating replenishment request.");
+        }
+
     }
 
     /**

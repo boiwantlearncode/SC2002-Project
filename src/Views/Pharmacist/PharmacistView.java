@@ -7,6 +7,7 @@ import Models.Medication;
 import Models.Pharmacist;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -58,13 +59,20 @@ public class PharmacistView {
      * @throws ClassNotFoundException if the data file cannot be found or loaded.
      */
 
-    public void submitReplenishmentRequest(Pharmacist pharmacist) throws IOException, ClassNotFoundException {
-        PharmacistController pharmacistController = new PharmacistController();
-        viewMedicationInventory(pharmacist);
+    public void submitReplenishmentRequest(Pharmacist pharmacist) throws IOException, ClassNotFoundException, InputMismatchException {
+        try {
+            PharmacistController pharmacistController = new PharmacistController();
+            viewMedicationInventory(pharmacist);
 
-        System.out.println("Enter the medication:");
-        String medicationName = scanner.nextLine();
-        pharmacistController.submitReplenishmentRequest(medicationName);
+            System.out.println("Enter the medication:");
+            String medicationName = scanner.nextLine();
+            if (medicationName.isEmpty()) {
+                throw new IOException("Medication cannot be empty.");
+            }
+            pharmacistController.submitReplenishmentRequest(medicationName);
+        } catch (IOException | InputMismatchException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

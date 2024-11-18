@@ -6,6 +6,7 @@ import DataManager.ReplenishmentRequestRepo;
 import Models.*;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -66,9 +67,10 @@ public class PharmacistController {
      * @param medicationName the name of the medication for which the replenishment request is being submitted.
      * @throws IOException            if an error occurs during data access or saving.
      * @throws ClassNotFoundException if the inventory data cannot be loaded.
+     * @throws InputMismatchException if quantity input is not in integer format
      */
     
-    public void submitReplenishmentRequest(String medicationName) throws IOException, ClassNotFoundException {
+    public void submitReplenishmentRequest(String medicationName) throws IOException, ClassNotFoundException, InputMismatchException {
         InventoryRepo inventoryRepo = new InventoryRepo();
         inventoryRepo.loadData();
         Inventory inventory = inventoryRepo.getData();
@@ -86,19 +88,25 @@ public class PharmacistController {
 
         if (!foundMedication) {
             System.out.println("Medication not found!!\nNo changes made");
-            return;
         } else {
             System.out.println("Enter quantity: ");
-            int quantity = scanner.nextInt();
+            try {
+                int quantity = scanner.nextInt();
+                if (quantity < 0) {
+                    throw new IOException("Quantity cannot be negative.");
+                }
+                ReplenishmentRequest replenishmentRequest = new ReplenishmentRequest(existingMedication, quantity, false);
+                ReplenishmentRequestRepo replenishmentRequestRepo = new ReplenishmentRequestRepo();
+                replenishmentRequestRepo.loadData();
 
-            ReplenishmentRequest replenishmentRequest = new ReplenishmentRequest(existingMedication, quantity, false);
-            ReplenishmentRequestRepo replenishmentRequestRepo = new ReplenishmentRequestRepo();
-            replenishmentRequestRepo.loadData();
+                List<ReplenishmentRequest> replenishmentRequests = replenishmentRequestRepo.getData();
+                replenishmentRequests.add(replenishmentRequest);
+                replenishmentRequestRepo.setReplenishmentRequests(replenishmentRequests);
+                replenishmentRequestRepo.saveData();
+            } catch (InputMismatchException e) {
+                throw new InputMismatchException("Quantity must be a positive integer.");
+            }
 
-            List<ReplenishmentRequest> replenishmentRequests = replenishmentRequestRepo.getData();
-            replenishmentRequests.add(replenishmentRequest);
-            replenishmentRequestRepo.setReplenishmentRequests(replenishmentRequests);
-            replenishmentRequestRepo.saveData();
         }
     }
 }
