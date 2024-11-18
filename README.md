@@ -18,7 +18,10 @@ git status
 
 ## Changelog
 
-### V1.7 - Reset Password (LATEST)
+### V1.8 - Reset Password (LATEST)
+- Added reset password feature at login screen (Main.java) - FIXED
+
+### V1.7 - Reset Password 
 - Added reset password feature at login screen (Main.java) - HALFWAY
 
 ### V1.6

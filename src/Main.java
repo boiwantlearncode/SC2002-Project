@@ -71,29 +71,19 @@ public class Main {
                 case "2":
                     System.exit(0);
                     break;
-                    case "3": // Reset Password (Admin Only)
+                case "3": 
                     System.out.println("Please log in as an administrator to reset a password.");
-                
-                    // Prompt for admin login
                     User adminUser = LoginController.validateUser();
-                
-                    // Validate admin login
-                    if (adminUser instanceof Administrator && !adminUser.isFirstLogin()) {
+                    if (adminUser instanceof Administrator) {
                         System.out.print("Enter the UserID to reset the password: ");
                         String userID = scanner.nextLine(); // Get the target user's UserID
-                
-                        try {
-                            PasswordController.resetPassword(userID); // Reset the target user's password
-                        } catch (IOException | ClassNotFoundException e) {
-                            System.out.println("An error occurred while resetting the password.");
-                            e.printStackTrace();
-                        }
-                    } else if (adminUser instanceof Administrator && adminUser.isFirstLogin()) {
-                        System.out.println("You must change your password on first login before resetting other passwords.");
-                    } else {
-                        System.out.println("Access denied. Only administrators can reset passwords.");
+                        PasswordController.resetPassword(userID); // Reset the target user's password
                     }
-                    break;
+                    else 
+                    {
+                        System.out.println("Access is denied. Only administrators can reset passwords.");
+                    }
+                    continue;
                 default:
                     System.out.println("Invalid Input");
                     continue;

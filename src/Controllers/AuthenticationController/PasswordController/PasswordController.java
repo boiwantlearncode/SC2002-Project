@@ -81,7 +81,7 @@ public class PasswordController {
                 user.setFirstLogin(true);  
                 userRepo.setUsers(users); 
                 userRepo.saveData(); 
-                System.out.println("Password for User ID '" + userID + "' has been reset to 'password'."); 
+                System.out.println("Password for User ID: " + userID + " has been reset to 'password."); 
                 return;  
             } 
         } 
