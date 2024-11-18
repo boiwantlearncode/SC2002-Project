@@ -255,7 +255,14 @@ public class AdministratorStaffController {
                     doctor.setAvailability(newAvailability);
                 }
             }
-            users.add(userToUpdate);
+
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getUserID().equals(userToUpdate.getUserID())) {
+                    users.set(i, userToUpdate);
+                    break;
+                }
+            }
+
             userRepo.setUsers(users);
             userRepo.saveData();
             adminView.displayAllStaff();
