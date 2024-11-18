@@ -53,11 +53,11 @@ public class DoctorView {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         
         if (availability.isEmpty()) {
-            System.out.println("NO SLOTS AVAILABLE.");
+            System.out.println("You have no upcoming slots. Input 4 to schedule your availability now.");
             return;
         }
         
-        System.out.println("SLOTS AVAILABLE:");
+        System.out.println("Slots available:");
         for (LocalDateTime date : availability) {
             String dateTimeString = date.format(formatter);
             System.out.println(dateTimeString);

@@ -38,14 +38,20 @@ public class PatientAppointmentView {
         userRepo.loadData();
         List<User> users = userRepo.getData();
 
+        boolean hasSlots = false;
         System.out.println("Available Appointment Slots:");
         for (User user : users) {
             if (user instanceof Doctor doctor) {
+                hasSlots = true;
                 System.out.println(doctor.getUserID() + ": " + doctor.getName() + " (" + doctor.getSpecialization() + ")");
                 for (LocalDateTime slot : doctor.getAvailability()) {
                     System.out.println("- " + slot.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 }
             }
+        }
+
+        if (!hasSlots) {
+            System.out.println("There are no available slots.");
         }
     }
 
@@ -103,13 +109,19 @@ public class PatientAppointmentView {
         appointmentsRepo.loadData();
         List<Appointment> appointments = appointmentsRepo.getData();
 
+        boolean hasAppointment = false;
         System.out.println("Scheduled Appointments:");
         for (Appointment apt : appointments) {
             if (apt.getPatientID().equals(patient.getUserID())) {
+                hasAppointment = true;
                 System.out.println("ID: " + apt.getAppointmentID() + ", Doctor: " + apt.getDoctorID() +
                         ", Date/Time: " + apt.getAppointmentTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +
                         ", Status: " + apt.getStatus());
             }
+        }
+
+        if (!hasAppointment) {
+            System.out.println("You have no upcoming appointment(s).");
         }
     }
 

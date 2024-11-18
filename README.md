@@ -18,7 +18,14 @@ git status
 
 ## Changelog
 
-### V1.5 (LATEST)
+### V1.6 (LATEST)
+- PatientAppointmentView -> viewAvailableAppointmentSlots() now shows "There are no available slots." if there are no available slots from doctors.
+- PatientAppointmentView -> viewScheduledAppointment() now shows "You have no upcoming appointments" if there are no upcoming appointments.
+- DoctorAppointmentController -> acceptDeclineAppointment() now shows the status for clarity.
+- DoctorAppointmentController -> viewUpcomingAppointment() now shows the status for clarity.
+- DoctorView -> viewPersonalSchedule() minor changes to print.
+
+### V1.5 
 - New patient appointment requests has status set to “Pending” 
 - PatientMenu choice “6” -> cancelAppointment(): Unable to cancel “Completed” appointments
 - PatientMenu choice “8” -> viewPastAppointmentOutcomeRecords(): Appointment records display correctly now, i.e. only “Completed” appointments

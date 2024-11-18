@@ -52,7 +52,7 @@ public class DoctorAppointmentView {
         System.out.println("APPOINTMENTS");
         for (Appointment apt : appointments) {
             System.out.println("ID: " + apt.getAppointmentID() + ", Patient: " + apt.getPatientID() +
-                    ", Date/Time: " + apt.getAppointmentTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                    ", Date/Time: " + apt.getAppointmentTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + ", Status: " + apt.getStatus());
         }
 
         System.out.println("Enter appointment ID: ");
@@ -83,10 +83,10 @@ public class DoctorAppointmentView {
             return;
         }
 
-        System.out.println("UPCOMING APPOINTMENTS");
+        System.out.println("Upcoming appointment(s):");
         for (Appointment apt : appointments) {
             System.out.println("ID: " + apt.getAppointmentID() + ", Patient: " + apt.getPatientID() +
-                    ", Date/Time: " + apt.getAppointmentTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                    ", Date/Time: " + apt.getAppointmentTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + ", Status: " + apt.getStatus());
         }
     }
 
