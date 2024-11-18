@@ -85,8 +85,10 @@ public class DoctorAppointmentView {
 
         System.out.println("Upcoming appointment(s):");
         for (Appointment apt : appointments) {
-            System.out.println("ID: " + apt.getAppointmentID() + ", Patient: " + apt.getPatientID() +
-                    ", Date/Time: " + apt.getAppointmentTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + ", Status: " + apt.getStatus());
+            if (apt.getStatus().equals("Confirmed")) {
+                System.out.println("ID: " + apt.getAppointmentID() + ", Patient: " + apt.getPatientID() +
+                ", Date/Time: " + apt.getAppointmentTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + ", Status: " + apt.getStatus());
+            }
         }
     }
 

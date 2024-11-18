@@ -18,11 +18,14 @@ git status
 
 ## Changelog
 
-### V1.9 (LATEST)
-- PatientView -> viewMedicalRecord() for past treatment/diagnosis, will be displayed correctly once doctor recordAppointmentOutcome().
+### V2.0 (LATEST)
+- DoctorAppointmentView -> viewUpcomingAppointments() now correctly shows all confirmed appointments ONLY.
 
 Current issues:
 Pharmacist unable to view & prescribe medications from doctor's recordAppointmentOutcome.
+
+### V1.9
+- PatientView -> viewMedicalRecord() for past treatment/diagnosis, will be displayed correctly once doctor recordAppointmentOutcome().
 
 ### V1.8 - Reset Password
 - Added reset password feature at login screen (Main.java) - FIXED
