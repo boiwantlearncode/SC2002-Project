@@ -18,7 +18,10 @@ git status
 
 ## Changelog
 
-### V3.1 (LATEST)
+### V3.2 (LATEST)
+- Fixed Pharmacist viewMedicationInventory for PH3 and PH4. Now it shows the lowStockLevel in print.
+
+### V3.1
 - Added more dummy data for initialisation.
 - Updated Admin viewAppointment().
 - Updated Doctor viewPersonalSchedule() to show in 3 groups.

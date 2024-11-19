@@ -128,23 +128,29 @@ public class PharmacistView {
         List<Medication> medications = inventory.getMedications();
 
         if (medications.isEmpty()) {
-            System.out.println("====================================================");
+            System.out.println("==============================================================");
             System.out.println("               MEDICATIONS INVENTORY               ");
-            System.out.println("====================================================");
+            System.out.println("==============================================================");
             System.out.println("No medications found in the inventory.");
-            System.out.println("====================================================");
+            System.out.println("==============================================================");
         } else {
-            System.out.println("====================================================");
+            System.out.println("==============================================================");
             System.out.println("               MEDICATIONS INVENTORY               ");
-            System.out.println("====================================================");
-            System.out.printf("%-30s | %-15s%n", "Name", "Stock Level");
-            System.out.println("----------------------------------------------------");
-    
+            System.out.println("==============================================================");
+            System.out.printf("%-20s | %-15s | %-20s%n", "Name", "Stock Level", "Low Stock Alert (<=50)");
+            System.out.println("--------------------------------------------------------------");
+
             for (Medication medication : medications) {
-                System.out.printf("%-30s | %-15d%n", medication.getName(), medication.getStockLevel());
+                String lowStockAlert = (medication.getStockLevel() <= 50) ? "Yes" : "No";
+                
+                System.out.printf("%-20s | %-15d | %-20s%n", 
+                    medication.getName(), 
+                    medication.getStockLevel(), 
+                    lowStockAlert
+                );
             }
-    
-            System.out.println("====================================================");
+
+            System.out.println("==============================================================");
         }
     }
 
