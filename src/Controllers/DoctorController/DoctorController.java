@@ -37,6 +37,12 @@ public class DoctorController {
      */
 
     public void viewPatientRecord(Doctor doctor, String patientID) throws IOException, ClassNotFoundException {
+        if (patientID.isEmpty()) {
+            throw new IOException("Invalid Patient ID, please try again.");
+        } else if (patientID.charAt(0) != 'P') {
+            throw new IOException("User ID does not belong to a patient, please try again.");
+        }
+
         UserRepo userRepo = new UserRepo();
         userRepo.loadData();
         List<User> users = userRepo.getData();
@@ -47,18 +53,38 @@ public class DoctorController {
 
         for (User user : users) {
             if (user.getUserID().equals(patientID)) {
-                existingPatient = (Patient) user;
-                patientExists = true;
-                break;
+                if (user instanceof Patient) {
+                    existingPatient = (Patient) user;
+                    patientExists = true;
+                    break;
+                } else {
+                    throw new IOException("User ID does not belong to a patient, please try again.");
+                }
             }
         }
 
         if (!patientExists) {
             System.out.println("Patient not found!!");
-            return;
         } else {
-            patientView.viewMedicalRecord(existingPatient);
+            MedicalRecord medicalRecord = existingPatient.getMedicalRecord();
+            if (medicalRecord != null) {
+                // Header
+                System.out.printf("\n%-5s %-30s %-30s%n", "S/N", "Diagnosis", "Treatment");
+                System.out.println("------------------------------------------------------------------");
+
+                // Print each row
+                for (int i = 0; i < medicalRecord.getPastDiagnosis().size(); i++) {
+                    System.out.printf("%-5d %-30s %-30s%n",
+                            i + 1, // Serial number
+                            medicalRecord.getPastDiagnosis().get(i), // Diagnosis
+                            medicalRecord.getPastTreatment().get(i) // Treatment
+                    );
+                }
+            } else {
+                System.out.println("No medical record.");
+            }
         }
+
     }
 
     /**
@@ -72,6 +98,10 @@ public class DoctorController {
      */
 
     public void updatePatientMedicalRecord(String patientID, String diagnosis, String treatment) throws IOException, ClassNotFoundException {
+        if (diagnosis == null || diagnosis.isEmpty() || treatment == null || treatment.isEmpty() ) {
+            throw new IOException("Diagnosis and treatment cannot be blank, please try again.");
+        }
+
         UserRepo userRepo = new UserRepo();
         userRepo.loadData();
         List<User> users = userRepo.getData();
@@ -89,7 +119,6 @@ public class DoctorController {
 
         if (!patientExists) {
             System.out.println("Patient not found!!");
-            return;
         } else {
             if (existingPatient.getMedicalRecord() == null) {
                 existingPatient.setMedicalRecord(new MedicalRecord(patientID, new ArrayList<>(), new ArrayList<>()));

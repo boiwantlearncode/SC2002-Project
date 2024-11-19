@@ -63,7 +63,7 @@ public class ProcessAdministratorChoice implements ProcessUserChoice<Administrat
             case "3": administratorStaffController.viewAppointmentsDetails(admin); break;
             case "4": administratorInventoryController.manageInventory(admin); break;
             case "5": administratorController.approveReplenishmentRequests(admin); break;
-            case "6": administratorView.changePassword(administrator); break;
+            case "6": administratorView.changePassword(admin); break;
             default: System.out.println("Invalid choice. Please try again.");
         }
     }

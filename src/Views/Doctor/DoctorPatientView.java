@@ -33,11 +33,15 @@ public class DoctorPatientView {
      */
     
     public void viewPatientRecord(Doctor doctor) throws IOException, ClassNotFoundException {
-        DoctorController doctorController = new DoctorController();
-        System.out.print("Enter patient ID: ");
-        String patientID = scanner.next();
+        try {
+            DoctorController doctorController = new DoctorController();
+            System.out.print("Enter patient ID: ");
+            String patientID = scanner.nextLine();
 
-        doctorController.viewPatientRecord(doctor, patientID);
+            doctorController.viewPatientRecord(doctor, patientID);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -49,14 +53,18 @@ public class DoctorPatientView {
      */
     
     public void updatePatientRecord() throws IOException, ClassNotFoundException {
-        DoctorController doctorController = new DoctorController();
-        System.out.print("Enter Patient ID: ");
-        String patientID = scanner.next();
-        System.out.print("Enter diagnosis: ");
-        String diagnosis = scanner.next();
-        System.out.print("Enter treatment: ");
-        String treatment = scanner.next();
+        try {
+            DoctorController doctorController = new DoctorController();
+            System.out.print("Enter Patient ID: ");
+            String patientID = scanner.nextLine();
+            System.out.print("Enter diagnosis: ");
+            String diagnosis = scanner.nextLine();
+            System.out.print("Enter treatment: ");
+            String treatment = scanner.nextLine();
 
-        doctorController.updatePatientMedicalRecord(patientID, diagnosis, treatment);
+            doctorController.updatePatientMedicalRecord(patientID, diagnosis, treatment);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

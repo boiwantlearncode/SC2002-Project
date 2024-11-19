@@ -308,6 +308,7 @@ public class AdministratorStaffController {
         List<Appointment> appointmentsList = getAllAppointments();
         if (appointmentsList.isEmpty()) {
             System.out.println("No Appointments");
+            return;
         }
         System.out.println("All Appointments:");
         for (Appointment apt : appointmentsList) {

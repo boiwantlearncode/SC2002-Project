@@ -18,7 +18,15 @@ git status
 
 ## Changelog
 
-### V2.7 (LATEST)
+### V2.9 (LATEST) - Bugfixes
+- (D1) [Bugfix]: No more error when entering user ID of non-Patient class e.g. D001 as patient ID input
+- (D1) Displays medical records in table format
+- (D2) Update medical record properly exception handling
+
+### V2.8
+- Fixed reset password
+
+### V2.7
 - New "Change Password" option for Pharmacist, Doctor and Admin
 - Password cannot be blank
 
