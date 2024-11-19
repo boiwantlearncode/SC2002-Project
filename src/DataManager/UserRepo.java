@@ -22,7 +22,7 @@ public class UserRepo implements SerializableRepo<List<User>>{
     public void saveData() throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USERS_FILE))) {
             oos.writeObject(users);
-            System.out.println("User data saved successfully.");
+            //System.out.println("User data saved successfully.");
         }
     }
 
@@ -38,7 +38,7 @@ public class UserRepo implements SerializableRepo<List<User>>{
                 if (Files.size(Paths.get(USERS_FILE)) == 0) {
                     // File is empty, populate with initial data
                     users.add(new Patient("P001", "John Doe", hashedPassword, salt, "patient","male", 34, "A+",
-                    "03426789071", "john@gmail.com",LocalDate.of(1990, 5, 15)));
+                    "84476972", "john@gmail.com",LocalDate.of(1990, 5, 15)));
 
                     List<LocalDateTime> availability = new ArrayList<>();
                     availability.add(LocalDateTime.of(2024, 12, 1, 10, 30));
@@ -57,7 +57,7 @@ public class UserRepo implements SerializableRepo<List<User>>{
                 } else {
                     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(USERS_FILE))) {
                         users = (List<User>) ois.readObject();
-                        System.out.println("User data loaded successfully.");
+                        //System.out.println("User data loaded successfully.");
                     }
                 }
             }

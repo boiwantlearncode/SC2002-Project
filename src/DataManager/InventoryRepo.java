@@ -17,7 +17,7 @@ public class InventoryRepo implements SerializableRepo<Inventory> {
     public void saveData() throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(INVENTORY_FILE))) {
             oos.writeObject(inventory);
-            System.out.println("Inventory data saved successfully.");
+            //System.out.println("Inventory data saved successfully.");
         }
     }
 
@@ -37,7 +37,7 @@ public class InventoryRepo implements SerializableRepo<Inventory> {
             } else {
                 try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(INVENTORY_FILE))) {
                     inventory = (Inventory) ois.readObject();
-                    System.out.println("Inventory data loaded successfully.");
+                    //System.out.println("Inventory data loaded successfully.");
                 }
             }
         }

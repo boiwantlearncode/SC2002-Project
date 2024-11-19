@@ -16,7 +16,7 @@ public class AppointmentsRepo implements SerializableRepo<List<Appointment>> {
     public void saveData() throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(APPOINTMENTS_FILE))) {
             oos.writeObject(appointments);
-            System.out.println("Appointments data saved successfully.");
+            //System.out.println("Appointments data saved successfully.");
         }
     }
 
@@ -26,7 +26,7 @@ public class AppointmentsRepo implements SerializableRepo<List<Appointment>> {
             if(Files.size(Paths.get(APPOINTMENTS_FILE)) != 0){
                 try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(APPOINTMENTS_FILE))) {
                     appointments = (List<Appointment>) ois.readObject();
-                    System.out.println("Appointments data loaded successfully.");
+                    //System.out.println("Appointments data loaded successfully.");
                 }
             }
             else{

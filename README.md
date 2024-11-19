@@ -18,7 +18,10 @@ git status
 
 ## Changelog
 
-### V2.5 (LATEST)
+### V2.6 (LATEST)
+- Removed all "save/load" print messages from our output.
+
+### V2.5
 - D001 will now have a default availibilty slot when the program runs for the first time -> UserRepo.java
 - (D4) DoctorView -> viewPersonalSchedule() will now show 2 things in total:
 |1. Upcoming availability slot(s)

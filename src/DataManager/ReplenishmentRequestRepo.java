@@ -16,7 +16,7 @@ public class ReplenishmentRequestRepo implements SerializableRepo<List<Replenish
     public void saveData() throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(REPLENISHMENT_REQUESTS_FILE))) {
             oos.writeObject(replenishmentRequests);
-            System.out.println("Replenishment requests data saved successfully.");
+            //System.out.println("Replenishment requests data saved successfully.");
         }
     }
 
@@ -26,7 +26,7 @@ public class ReplenishmentRequestRepo implements SerializableRepo<List<Replenish
             if(Files.size(Paths.get(REPLENISHMENT_REQUESTS_FILE)) != 0){
                 try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(REPLENISHMENT_REQUESTS_FILE))) {
                     replenishmentRequests = (List<ReplenishmentRequest>) ois.readObject();
-                    System.out.println("Replenishment requests data loaded successfully.");
+                    //System.out.println("Replenishment requests data loaded successfully.");
                 }
             }
             else{
