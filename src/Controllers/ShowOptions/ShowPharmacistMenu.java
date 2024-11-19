@@ -19,5 +19,6 @@ public class ShowPharmacistMenu implements ShowUserMenu {
         System.out.println("2. Update Prescription Status");
         System.out.println("3. View Medication Inventory");
         System.out.println("4. Submit Replenishment Request");
+        System.out.println("5. Change Password");
     }
 }

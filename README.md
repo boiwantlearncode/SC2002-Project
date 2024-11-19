@@ -18,7 +18,11 @@ git status
 
 ## Changelog
 
-### V2.6 (LATEST)
+### V2.7 (LATEST)
+- New "Change Password" option for Pharmacist, Doctor and Admin
+- Password cannot be blank
+
+### V2.6 
 - Removed all "save/load" print messages from our output.
 
 ### V2.5

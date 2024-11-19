@@ -29,6 +29,7 @@ public class ProcessPharmacistChoice implements ProcessUserChoice<Pharmacist>{
             case "2": pharmacistView.updatePrescriptionStatus(pharmacist); break;
             case "3": pharmacistView.viewMedicationInventory(pharmacist); break;
             case "4": pharmacistView.submitReplenishmentRequest(pharmacist); break;
+            case "5": pharmacistView.changePassword(pharmacist); break;
             default: System.out.println("Invalid choice. Please try again.");
         }
     }

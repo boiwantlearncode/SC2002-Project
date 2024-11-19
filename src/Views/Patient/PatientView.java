@@ -151,9 +151,13 @@ public class PatientView {
      */
     
     public void changePassword(Patient patient) throws IOException, ClassNotFoundException {
-        PasswordController passwordController = new PasswordController();
-        System.out.print("Enter new password: ");
-        String newPassword = scanner.nextLine();
-        passwordController.changePassword(newPassword, patient.getUserID());
+        try {
+            PasswordController passwordController = new PasswordController();
+            System.out.print("Enter new password: ");
+            String newPassword = scanner.nextLine();
+            passwordController.changePassword(newPassword, patient.getUserID());
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Invalid password format, please try again.");
+        }
     }
 }

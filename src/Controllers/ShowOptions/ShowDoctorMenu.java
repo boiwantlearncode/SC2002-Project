@@ -23,5 +23,6 @@ public class ShowDoctorMenu implements ShowUserMenu {
         System.out.println("5. Accept or Decline Appointment Requests");
         System.out.println("6. View Upcoming Appointments");
         System.out.println("7. Record Appointment Outcome");
+        System.out.println("8. Change Password");
     }
 }

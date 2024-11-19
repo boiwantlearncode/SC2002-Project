@@ -39,6 +39,11 @@ public class PasswordController {
 
     // Change password
     public void changePassword(String newPassword, String userID) throws IOException, ClassNotFoundException {
+        // Check if valid password condition
+        if (newPassword == null || newPassword.isEmpty()) {
+            throw new IOException("Password cannot be empty");
+        }
+
         UserRepo userRepo = new UserRepo();
         userRepo.loadData();
         List<User> users = userRepo.getData();
@@ -59,6 +64,7 @@ public class PasswordController {
                 break;
             }
         }
+        System.out.println("Password successfully changed.");
     }
 
     public static void resetPassword(String userID) throws IOException, ClassNotFoundException { 

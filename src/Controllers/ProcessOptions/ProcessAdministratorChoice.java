@@ -4,6 +4,7 @@ import Controllers.AdministratorController.AdministratorController;
 import Controllers.AdministratorController.AdministratorInventoryController;
 import Controllers.AdministratorController.AdministratorStaffController;
 import Models.Administrator;
+import Views.Administrator.AdministratorView;
 
 import java.io.IOException;
 
@@ -16,7 +17,7 @@ import java.io.IOException;
  */
 
 public class ProcessAdministratorChoice implements ProcessUserChoice<Administrator>{
-
+    AdministratorView administratorView = new AdministratorView();
     AdministratorStaffController administratorStaffController = new AdministratorStaffController();
     AdministratorInventoryController administratorInventoryController = new AdministratorInventoryController();
     AdministratorController administratorController = new AdministratorController();
@@ -62,6 +63,7 @@ public class ProcessAdministratorChoice implements ProcessUserChoice<Administrat
             case "3": administratorStaffController.viewAppointmentsDetails(admin); break;
             case "4": administratorInventoryController.manageInventory(admin); break;
             case "5": administratorController.approveReplenishmentRequests(admin); break;
+            case "6": administratorView.changePassword(administrator); break;
             default: System.out.println("Invalid choice. Please try again.");
         }
     }

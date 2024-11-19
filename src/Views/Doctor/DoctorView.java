@@ -1,8 +1,10 @@
 package Views.Doctor;
 
+import Controllers.AuthenticationController.PasswordController.PasswordController;
 import Controllers.DoctorController.DoctorController;
 import DataManager.AppointmentsRepo;
 import DataManager.UserRepo;
+import Models.Administrator;
 import Models.Appointment;
 import Models.Doctor;
 import Models.User;
@@ -153,5 +155,24 @@ public class DoctorView {
 
         doctorController.setAvailability(doctor, availableTime);
         System.out.println("Availability added successfully.");
+    }
+
+    /**
+     * Allows the patient to change their password.
+     *
+     * @param doctor the {@code Doctor} whose password is to be changed.
+     * @throws IOException            if an error occurs while saving the updated password.
+     * @throws ClassNotFoundException if the data file cannot be found or loaded.
+     */
+
+    public void changePassword(Doctor doctor) throws IOException, ClassNotFoundException {
+        try {
+            PasswordController passwordController = new PasswordController();
+            System.out.print("Enter new password: ");
+            String newPassword = scanner.nextLine();
+            passwordController.changePassword(newPassword, doctor.getUserID());
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Invalid password format, please try again.");
+        }
     }
 }

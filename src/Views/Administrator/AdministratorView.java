@@ -1,5 +1,7 @@
 package Views.Administrator;
 
+import Controllers.AuthenticationController.PasswordController.PasswordController;
+import Models.Administrator;
 import Models.Patient;
 import Models.ReplenishmentRequest;
 import Models.User;
@@ -107,5 +109,24 @@ public class AdministratorView {
     
     public void displayInvalidRequestMessage(String requestId) {
         System.out.println("Request ID " + requestId + " not found or already approved.");
+    }
+
+    /**
+     * Allows the patient to change their password.
+     *
+     * @param administrator the {@code Administrator} whose password is to be changed.
+     * @throws IOException            if an error occurs while saving the updated password.
+     * @throws ClassNotFoundException if the data file cannot be found or loaded.
+     */
+
+    public void changePassword(Administrator administrator) throws IOException, ClassNotFoundException {
+        try {
+            PasswordController passwordController = new PasswordController();
+            System.out.print("Enter new password: ");
+            String newPassword = scanner.nextLine();
+            passwordController.changePassword(newPassword, administrator.getUserID());
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Invalid password format, please try again.");
+        }
     }
 }

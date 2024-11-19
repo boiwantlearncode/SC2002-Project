@@ -51,20 +51,23 @@ public class LoginController {
                          newPassword = scanner.nextLine();
                          System.out.print("Confirm New Password: ");
                          confirmPassword = scanner.nextLine();
-                         if (PasswordController.validatePassword(newPassword, storedHash, storedSalt)) {
-                            System.out.println("Your new password cannot be your old password.\nTRY AGAIN.");
+                         if (confirmPassword == null || confirmPassword.isEmpty()) {
+                             System.out.println("Password cannot be empty.\nTRY AGAIN.");
+                         } else if (PasswordController.validatePassword(newPassword, storedHash, storedSalt)) {
+                             System.out.println("Your new password cannot be your old password.\nTRY AGAIN.");
                          } else if (confirmPassword.equals(newPassword)) {
-                            String newSalt = PasswordController.generateSalt();
-                            user.setSalt(newSalt);
-                            user.setPassword(PasswordController.hashPassword(newPassword, newSalt));
-                            user.setFirstLogin(false);
-                            break;
+                             String newSalt = PasswordController.generateSalt();
+                             user.setSalt(newSalt);
+                             user.setPassword(PasswordController.hashPassword(newPassword, newSalt));
+                             user.setFirstLogin(false);
+                             break;
                          } else {
                              System.out.println("Passwords do not match. Try again.");
                          }
                      }
  
                      // Save the new password
+                     System.out.println("New password has been set.");
                      userRepo.setUsers(users);
                      userRepo.saveData();
                      return user;

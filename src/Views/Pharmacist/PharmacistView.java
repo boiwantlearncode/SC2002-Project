@@ -1,14 +1,10 @@
 package Views.Pharmacist;
 
+import Controllers.AuthenticationController.PasswordController.PasswordController;
 import Controllers.PharmacistController.PharmacistController;
 import DataManager.AppointmentsRepo;
 import DataManager.InventoryRepo;
-import Models.Appointment;
-import Models.AppointmentOutcomeRecord;
-import Models.Inventory;
-import Models.Medication;
-import Models.Pharmacist;
-import Models.Prescription;
+import Models.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -149,6 +145,25 @@ public class PharmacistView {
             }
     
             System.out.println("====================================================");
+        }
+    }
+
+    /**
+     * Allows the patient to change their password.
+     *
+     * @param pharmacist the {@code Pharmacist} whose password is to be changed.
+     * @throws IOException            if an error occurs while saving the updated password.
+     * @throws ClassNotFoundException if the data file cannot be found or loaded.
+     */
+
+    public void changePassword(Pharmacist pharmacist) throws IOException, ClassNotFoundException {
+        try {
+            PasswordController passwordController = new PasswordController();
+            System.out.print("Enter new password: ");
+            String newPassword = scanner.nextLine();
+            passwordController.changePassword(newPassword, pharmacist.getUserID());
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Invalid password format, please try again.");
         }
     }
 }

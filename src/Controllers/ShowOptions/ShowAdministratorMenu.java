@@ -20,5 +20,6 @@ public class ShowAdministratorMenu implements ShowUserMenu {
         System.out.println("3. View Appointments Details");
         System.out.println("4. View and Manage Medication Inventory");
         System.out.println("5. Approve Replenishment Requests");
+        System.out.println("6. Change Password");
     }
 }

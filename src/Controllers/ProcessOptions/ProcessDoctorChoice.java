@@ -5,6 +5,7 @@ import Models.Doctor;
 import Views.Doctor.DoctorAppointmentView;
 import Views.Doctor.DoctorPatientView;
 import Views.Doctor.DoctorView;
+import Views.Patient.PatientView;
 
 import java.io.IOException;
 
@@ -37,6 +38,7 @@ public class ProcessDoctorChoice implements ProcessUserChoice<Doctor>{
             case "5": appointmentView.acceptOrDeclineAppointment(doctor); break;
             case "6": appointmentView.viewUpcomingAppointments(doctor); break;
             case "7": appointmentView.recordAppointmentOutcome(doctor); break;
+            case "8": doctorView.changePassword(doctor); break;
             default: System.out.println("Invalid choice. Please try again.");
         }
     }

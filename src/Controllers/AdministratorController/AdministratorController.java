@@ -1,7 +1,9 @@
 package Controllers.AdministratorController;
 
+import Controllers.AuthenticationController.PasswordController.PasswordController;
 import DataManager.ReplenishmentRequestRepo;
 import Models.Administrator;
+import Models.Patient;
 import Models.ReplenishmentRequest;
 import Views.Administrator.AdministratorView;
 
@@ -107,4 +109,5 @@ public class AdministratorController {
             System.out.println("Failed to save replenishment request approvals.");
         }
     }
+
 }
