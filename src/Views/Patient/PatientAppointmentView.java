@@ -76,24 +76,21 @@ public class PatientAppointmentView {
         System.out.print("Enter Doctor ID: ");
         doctorID = scanner.nextLine();
 
-        while (true) {
-            System.out.print("Enter date (YYYY-MM-DD): ");
-            date = scanner.nextLine();
-            System.out.print("Enter time (HH:MM): ");
-            time = scanner.nextLine();
+        System.out.print("Enter date (YYYY-MM-DD): ");
+        date = scanner.nextLine();
+        System.out.print("Enter time (HH:MM): ");
+        time = scanner.nextLine();
 
-            String dateTimeString = date + " " + time;
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String dateTimeString = date + " " + time;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-            try {
-                appointmentDateTime = LocalDateTime.parse(dateTimeString, formatter);
-                break;
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date or time format. Please enter the date in YYYY-MM-DD and time in HH:MM format.");
-            }
+        try {
+            appointmentDateTime = LocalDateTime.parse(dateTimeString, formatter);
+            patientAppointmentController.scheduleAppointment(doctorID, appointmentDateTime, patient);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date or time format. Please enter the date in YYYY-MM-DD and time in HH:MM format.");
         }
 
-        patientAppointmentController.scheduleAppointment(doctorID, appointmentDateTime, patient);
     }
 
     /**
@@ -147,24 +144,21 @@ public class PatientAppointmentView {
         System.out.print("Enter the Appointment ID to reschedule: ");
         appointmentID = scanner.nextLine();
 
-        while (true) {
-            System.out.print("Enter new date (YYYY-MM-DD): ");
-            date = scanner.nextLine();
-            System.out.print("Enter new time (HH:MM): ");
-            time = scanner.nextLine();
+        System.out.print("Enter new date (YYYY-MM-DD): ");
+        date = scanner.nextLine();
+        System.out.print("Enter new time (HH:MM): ");
+        time = scanner.nextLine();
 
-            String dateTimeString = date + " " + time;
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String dateTimeString = date + " " + time;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-            try {
-                newDateTime = LocalDateTime.parse(dateTimeString, formatter);
-                break;
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date or time format. Please enter the date in YYYY-MM-DD and time in HH:MM format.");
-            }
+        try {
+            newDateTime = LocalDateTime.parse(dateTimeString, formatter);
+            patientAppointmentController.rescheduleAppointment(patient, appointmentID, newDateTime);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date or time format. Please enter the date in YYYY-MM-DD and time in HH:MM format.");
         }
 
-        patientAppointmentController.rescheduleAppointment(patient, appointmentID, newDateTime);
     }
 
     /**

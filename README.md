@@ -18,7 +18,10 @@ git status
 
 ## Changelog
 
-### V3.2 (LATEST)
+### V3.3 (LATEST)
+- (P4, P5, D4) Removed unnecessary while loop so that user can exit to main menu
+
+### V3.2
 - Fixed Pharmacist viewMedicationInventory for PH3 and PH4. Now it shows the lowStockLevel in print.
 
 ### V3.1
