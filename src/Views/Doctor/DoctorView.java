@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -79,36 +80,40 @@ public class DoctorView {
         }
 
         System.out.println("==============================================");
-        System.out.println("Booked Appointments:");
-        boolean hasConfirmed = false;
-        boolean hasPending = false;
-    
+        List<Appointment> confirmedAppointments = new ArrayList<>();
+        List<Appointment> pendingAppointments = new ArrayList<>();
+
         for (Appointment apt : appointments) {
-            if (apt.getStatus().equals("Confirmed")) {
-                if (!hasConfirmed) {
-                    System.out.println("Confirmed Appointments:");
-                    hasConfirmed = true;
-                }
-                System.out.printf("- ID: %s | Patient: %s | Date/Time: %s | Status: %s%n",
-                    apt.getAppointmentID(),
-                    apt.getPatientID(),
-                    apt.getAppointmentTime().format(formatter),
-                    apt.getStatus());
-            } else if (apt.getStatus().equals("Pending")) {
-                if (!hasPending) {
-                    System.out.println("Pending Appointments:");
-                    hasPending = true;
-                }
-                System.out.printf("- ID: %s | Patient: %s | Date/Time: %s | Status: %s%n",
-                    apt.getAppointmentID(),
-                    apt.getPatientID(),
-                    apt.getAppointmentTime().format(formatter),
-                    apt.getStatus());
+            if (apt.getStatus().equalsIgnoreCase("Confirmed")) {
+                confirmedAppointments.add(apt);
+            } else if (apt.getStatus().equalsIgnoreCase("Pending")) {
+                pendingAppointments.add(apt);
             }
         }
-    
-        if (!hasConfirmed && !hasPending) {
-            System.out.println("No upcoming appointments found.");
+
+        System.out.println("Confirmed Appointments:");
+        if (confirmedAppointments.isEmpty()) {
+            System.out.println("No confirmed appointments.");
+        } else {
+            for (Appointment apt : confirmedAppointments) {
+                System.out.printf("- ID: %s | Patient: %s | Date/Time: %s%n",
+                    apt.getAppointmentID(),
+                    apt.getPatientID(),
+                    apt.getAppointmentTime().format(formatter));
+            }
+        }
+
+        System.out.println("==============================================");
+        System.out.println("Pending Appointments:");
+        if (pendingAppointments.isEmpty()) {
+            System.out.println("No pending appointments.");
+        } else {
+            for (Appointment apt : pendingAppointments) {
+                System.out.printf("- ID: %s | Patient: %s | Date/Time: %s%n",
+                    apt.getAppointmentID(),
+                    apt.getPatientID(),
+                    apt.getAppointmentTime().format(formatter));
+            }
         }
         System.out.println("==============================================");
     }
@@ -125,7 +130,6 @@ public class DoctorView {
     public void setAvailability(Doctor doctor) throws IOException, ClassNotFoundException {
         DoctorController doctorController = new DoctorController();
 
-        Scanner scanner = new Scanner(System.in);
         String date;
         String time;
         LocalDateTime availableTime = null;

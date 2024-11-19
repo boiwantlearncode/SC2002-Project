@@ -41,7 +41,10 @@ public class UserRepo implements SerializableRepo<List<User>>{
                     "84476972", "john@gmail.com",LocalDate.of(1990, 5, 15)));
 
                     List<LocalDateTime> availability = new ArrayList<>();
+                    availability.add(LocalDateTime.of(2024, 11, 20, 15, 10));
+                    availability.add(LocalDateTime.of(2024, 11, 24, 15, 10));
                     availability.add(LocalDateTime.of(2024, 12, 1, 10, 30));
+
                     users.add(new Doctor("D001", "Dr. Jane Smith", hashedPassword, salt,
                         "doctor", "male", 32,"General Practitioner", availability));
 

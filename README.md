@@ -18,7 +18,15 @@ git status
 
 ## Changelog
 
-### V3.0 (LATEST) - Bugfixes
+### V3.1 (LATEST)
+- Added more dummy data for initialisation.
+- Updated Admin viewAppointment().
+- Updated Doctor viewPersonalSchedule() to show in 3 groups.
+|1. Upcoming availability slot(s)
+|2.1. Confirmed appointment(s)
+|2.2. Pending appointment(s)
+
+### V3.0 - Bugfixes
 - Bugfix for forget password
 
 ### V2.9 - Bugfixes

@@ -279,7 +279,11 @@ public class AdministratorStaffView {
      */
     
     public void displayAppointments(Appointment apt) {
-        System.out.println(apt.getAppointmentID() + " - " + apt.getAppointmentTime() + " (" + apt.getStatus() + ")"
-                + apt.getDoctorID());
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    System.out.printf("%-10s %-20s %-15s %-15s%n",
+        apt.getAppointmentID(),
+        apt.getAppointmentTime().format(formatter),
+        apt.getStatus(),
+        apt.getDoctorID());
     }
 }

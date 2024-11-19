@@ -306,13 +306,22 @@ public class AdministratorStaffController {
     
     public void viewAppointmentsDetails(Administrator admin) throws IOException, ClassNotFoundException {
         List<Appointment> appointmentsList = getAllAppointments();
+
         if (appointmentsList.isEmpty()) {
             System.out.println("No Appointments");
             return;
         }
-        System.out.println("All Appointments:");
+
+        appointmentsList.sort((a1, a2) -> a1.getAppointmentTime().compareTo(a2.getAppointmentTime()));
+
+        System.out.println("========================================================");
+        System.out.println("All Appointments (Sorted by Date/Time):");
+        System.out.println("========================================================");
+
         for (Appointment apt : appointmentsList) {
             adminView.displayAppointments(apt);
         }
+
+        System.out.println("========================================================");
     }
 }
