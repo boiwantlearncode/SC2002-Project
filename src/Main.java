@@ -53,12 +53,13 @@ public class Main {
         ProcessPatientChoice processPatientChoice = new ProcessPatientChoice();
         ProcessPharmacistChoice processPharmacistChoice = new ProcessPharmacistChoice();
 
-        System.out.println("****** HOSPITAL MANAGEMENT SYSTEM ******\n");
-
         User validatedUser = null;
 
         // Main loop for login and role-based menu interaction
         while (true) {
+            System.out.println("====================================================");
+            System.out.println("              HOSPITAL MANAGEMENT SYSTEM           ");
+            System.out.println("====================================================");
             System.out.println("Enter 1 to login:");
             System.out.println("Enter 2 to exit:");
             System.out.println("Enter 3 to Forget password:"); 

@@ -18,7 +18,10 @@ git status
 
 ## Changelog
 
-### V3.3 (LATEST)
+### V3.4 (LATEST)
+- Minor visual changes to main.java for printing of our homescreen
+
+### V3.3
 - (P4, P5, D4) Removed unnecessary while loop so that user can exit to main menu
 
 ### V3.2
