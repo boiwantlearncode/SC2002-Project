@@ -85,11 +85,25 @@ public class AdministratorInventoryController {
         List<Medication> medications = inventory.getMedications();
 
         if (medications.isEmpty()) {
-            inventoryView.displayError("Inventory is empty.");
+            System.out.println("====================================================");
+            System.out.println("               INVENTORY MEDICATIONS               ");
+            System.out.println("====================================================");
+            System.out.println("No medications found in the inventory.");
+            System.out.println("====================================================");
         } else {
+            System.out.println("=======================================");
+            System.out.println("         INVENTORY MEDICATIONS         ");
+            System.out.println("=======================================");
+            System.out.printf("%-20s %-10s%n", "Name", "Stock");
+            System.out.println("---------------------------------------");
+    
             for (Medication medication : medications) {
-                inventoryView.displayInventory(medication);
+                System.out.printf("%-20s %-10d%n", 
+                    medication.getName(), 
+                    medication.getStockLevel());
             }
+    
+            System.out.println("=======================================");
         }
     }
 

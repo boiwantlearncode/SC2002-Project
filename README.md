@@ -18,7 +18,18 @@ git status
 
 ## Changelog
 
-### V2.4 (LATEST)
+### V2.5 (LATEST)
+- D001 will now have a default availibilty slot when the program runs for the first time -> UserRepo.java
+- (D4) DoctorView -> viewPersonalSchedule() will now show 2 things in total:
+|1. Upcoming availability slot(s)
+|2. Booked appointment(s)
+|2.1. Confirmed appointment(s)
+|2.2. Pending appointment(s)
+- (PH3) Enhanced clarity for printing in PharmacistView -> viewMedicationInventory(). 
+- (A1) Enhanced clarity for printing in AdministratorStaffView -> displayAllStaff(). It will now print in groups based on their roles - Doctor, Pharmacist, Admin
+- (A6) Enhanced clarity for printing in AdministratorInventoryController -> viewInventory(). 
+
+### V2.4
 - viewAppointmentRecordOutcome(). Pharmacist can now view all appointments with pending medicine for dispersion.
 - updatePrescriptionStatus(). Once medication for appointment is dispensed (updated), medication inventory will -1 accordingly.
 - Doctor recordAppointmentOutcome() can now issue zero to many medicine for an appointment.

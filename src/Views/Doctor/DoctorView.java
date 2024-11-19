@@ -1,7 +1,9 @@
 package Views.Doctor;
 
 import Controllers.DoctorController.DoctorController;
+import DataManager.AppointmentsRepo;
 import DataManager.UserRepo;
+import Models.Appointment;
 import Models.Doctor;
 import Models.User;
 
@@ -49,19 +51,64 @@ public class DoctorView {
             return;
         }
 
+         // Load and filter appointments
+        AppointmentsRepo appointmentsRepo = new AppointmentsRepo();
+        appointmentsRepo.loadData();
+        List<Appointment> appointments = appointmentsRepo.getData();
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        appointments.removeIf(apt -> 
+            !(apt.getAppointmentTime().isAfter(currentTime)) || 
+            !apt.getDoctorID().equals(doctor.getUserID())
+        );
+
+        // Retrieve availability
         List<LocalDateTime> availability = existingDoctor.getAvailability();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        System.out.println("==============================================");
+        System.out.println("Availability Slots:");
         if (availability.isEmpty()) {
-            System.out.println("You have no upcoming slots. Input 4 to schedule your availability now.");
-            return;
+            System.out.println("You have no available slots for booking. Input 4 to schedule your availability now.");
+        } else {
+            for (LocalDateTime date : availability) {
+                System.out.println("- " + date.format(formatter));
+            }
         }
-        
-        System.out.println("Slots available:");
-        for (LocalDateTime date : availability) {
-            String dateTimeString = date.format(formatter);
-            System.out.println(dateTimeString);
+
+        System.out.println("==============================================");
+        System.out.println("Booked Appointments:");
+        boolean hasConfirmed = false;
+        boolean hasPending = false;
+    
+        for (Appointment apt : appointments) {
+            if (apt.getStatus().equals("Confirmed")) {
+                if (!hasConfirmed) {
+                    System.out.println("Confirmed Appointments:");
+                    hasConfirmed = true;
+                }
+                System.out.printf("- ID: %s | Patient: %s | Date/Time: %s | Status: %s%n",
+                    apt.getAppointmentID(),
+                    apt.getPatientID(),
+                    apt.getAppointmentTime().format(formatter),
+                    apt.getStatus());
+            } else if (apt.getStatus().equals("Pending")) {
+                if (!hasPending) {
+                    System.out.println("Pending Appointments:");
+                    hasPending = true;
+                }
+                System.out.printf("- ID: %s | Patient: %s | Date/Time: %s | Status: %s%n",
+                    apt.getAppointmentID(),
+                    apt.getPatientID(),
+                    apt.getAppointmentTime().format(formatter),
+                    apt.getStatus());
+            }
         }
+    
+        if (!hasConfirmed && !hasPending) {
+            System.out.println("No upcoming appointments found.");
+        }
+        System.out.println("==============================================");
     }
 
     /**

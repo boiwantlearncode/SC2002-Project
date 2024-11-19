@@ -131,9 +131,24 @@ public class PharmacistView {
 
         List<Medication> medications = inventory.getMedications();
 
-        System.out.println("MEDICATIONS INVENTORY");
-        for (Medication medication : medications) {
-            System.out.println("Name: " + medication.getName() + "\nStock Level: " + medication.getStockLevel());
+        if (medications.isEmpty()) {
+            System.out.println("====================================================");
+            System.out.println("               MEDICATIONS INVENTORY               ");
+            System.out.println("====================================================");
+            System.out.println("No medications found in the inventory.");
+            System.out.println("====================================================");
+        } else {
+            System.out.println("====================================================");
+            System.out.println("               MEDICATIONS INVENTORY               ");
+            System.out.println("====================================================");
+            System.out.printf("%-30s | %-15s%n", "Name", "Stock Level");
+            System.out.println("----------------------------------------------------");
+    
+            for (Medication medication : medications) {
+                System.out.printf("%-30s | %-15d%n", medication.getName(), medication.getStockLevel());
+            }
+    
+            System.out.println("====================================================");
         }
     }
 }

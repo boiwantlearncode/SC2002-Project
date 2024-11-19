@@ -55,15 +55,60 @@ public class AdministratorStaffView {
 
     public void displayAllStaff() throws IOException, ClassNotFoundException {
         UserRepo userRepo = new UserRepo();
-        List<User> users = new ArrayList<>();
         userRepo.loadData();
-        users = userRepo.getData();
-
+        List<User> users = userRepo.getData();
+    
+        List<User> doctors = new ArrayList<>();
+        List<User> pharmacists = new ArrayList<>();
+        List<User> administrators = new ArrayList<>();
+    
         for (User user : users) {
             if (!(user instanceof Patient)) {
-                System.out.println(user.getUserID() + " - " + user.getName() + " (" + user.getRole() + ")");
+                switch (user.getRole().toLowerCase()) {
+                    case "doctor":
+                        doctors.add(user);
+                        break;
+                    case "pharmacist":
+                        pharmacists.add(user);
+                        break;
+                    case "admin":
+                        administrators.add(user);
+                        break;
+                }
             }
         }
+    
+        System.out.println("==============================================");
+        System.out.println("Doctors:");
+        if (doctors.isEmpty()) {
+            System.out.println("No doctors found.");
+        } else {
+            for (User doctor : doctors) {
+                System.out.println("- " + doctor.getUserID() + " | " + doctor.getName());
+            }
+        }
+    
+        System.out.println("==============================================");
+        System.out.println("Pharmacists:");
+        if (pharmacists.isEmpty()) {
+            System.out.println("No pharmacists found.");
+        } else {
+            for (User pharmacist : pharmacists) {
+                System.out.println("- " + pharmacist.getUserID() + " | " + pharmacist.getName());
+            }
+        }
+    
+        System.out.println("==============================================");
+        System.out.println("Admins:");
+        if (administrators.isEmpty()) {
+            System.out.println("No administrators found.");
+        } else {
+            for (User admin : administrators) {
+                System.out.println("- " + admin.getUserID() + " | " + admin.getName());
+            }
+        }
+    
+        System.out.println("==============================================");
     }
 
     /**
