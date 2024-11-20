@@ -129,24 +129,24 @@ public class PharmacistView {
 
         if (medications.isEmpty()) {
             System.out.println("==============================================================");
-            System.out.println("               MEDICATIONS INVENTORY               ");
+            System.out.println("                     MEDICATIONS INVENTORY                    ");
             System.out.println("==============================================================");
             System.out.println("No medications found in the inventory.");
             System.out.println("==============================================================");
         } else {
             System.out.println("==============================================================");
-            System.out.println("               MEDICATIONS INVENTORY               ");
+            System.out.println("                     MEDICATIONS INVENTORY                    ");
             System.out.println("==============================================================");
-            System.out.printf("%-20s | %-15s | %-20s%n", "Name", "Stock Level", "Low Stock Alert (<=50)");
+            System.out.printf("%-20s | %-15s | %-20s%n", "Name", "Stock Level", "Low Stock Alert");
             System.out.println("--------------------------------------------------------------");
 
             for (Medication medication : medications) {
-                String lowStockAlert = (medication.getStockLevel() <= 50) ? "Yes" : "No";
-                
-                System.out.printf("%-20s | %-15d | %-20s%n", 
-                    medication.getName(), 
-                    medication.getStockLevel(), 
-                    lowStockAlert
+                String lowStockAlert = (medication.getStockLevel() <= medication.getLowStockAlert()) ? "Yes" : "No";
+
+                System.out.printf("%-20s | %-15d | %-20s%n",
+                        medication.getName(),
+                        medication.getStockLevel(),
+                        lowStockAlert
                 );
             }
 

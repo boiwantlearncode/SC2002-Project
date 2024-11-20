@@ -18,7 +18,12 @@ git status
 
 ## Changelog
 
-### V3.5 (LATEST)
+### V3.6 (LATEST)
+- Low stock alert level now individual basis rather than <=50
+- Pharmacist only sees low stock alert and not the level
+- Admin when view inventory can see low stock alert level
+
+### V3.5
 - All classes in Models adhere to Models rules
 - Migrated creation of requestId e.g. REQ1 from Model->ReplenishmentRequest to Controller->PharmacistController 
 
