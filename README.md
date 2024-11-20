@@ -18,7 +18,15 @@ git status
 
 ## Changelog
 
-### V3.6 (LATEST)
+### V3.7 (LATEST)
+- Enabled SMS Notification Service
+- Login with:
+P001 with default 'password'
+D001 with 'password123'
+PH001 with 'password123'
+A001 with 'password123'
+
+### V3.6
 - Low stock alert level now individual basis rather than <=50
 - Pharmacist only sees low stock alert and not the level
 - Admin when view inventory can see low stock alert level

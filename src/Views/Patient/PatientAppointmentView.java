@@ -199,8 +199,11 @@ public class PatientAppointmentView {
         }
 
         System.out.println("=== Past Appointment Outcome Records ===");
+        boolean hasCompletedAppointments = false;
+        
         for (Appointment apt : appointments) {
             if (apt.getStatus().equals("Completed")) {
+                hasCompletedAppointments = true;
                 AppointmentOutcomeRecord record = apt.getOutcomeRecord();
 
                 System.out.println("Appointment ID: " + apt.getAppointmentID());
@@ -214,6 +217,10 @@ public class PatientAppointmentView {
                 }
                 System.out.println();
             }
+        }
+
+        if (!hasCompletedAppointments) {
+            System.out.println("No completed appointments with recorded outcomes.");
         }
     }
 }

@@ -89,7 +89,7 @@ public class PatientAppointmentController {
         userRepo.saveData();
 
         // Hiding the function until the day before presentation - since the my trial account got limited $$ to send SMS 
-        // SmsController.SendSMS("schedule", appointmentTime, selectedDoctor, patient);
+        SmsController.SendSMS("schedule", appointmentTime, selectedDoctor, patient);
     }
 
     /**
@@ -172,7 +172,7 @@ public class PatientAppointmentController {
             System.out.println("Appointment rescheduled successfully.");
 
             // Hiding the function until the day before presentation - since the my trial account got limited $$ to send SMS 
-            // SmsController.SendSMS("reschedule", newAppointmentTime, selectedDoctor, patient);
+            SmsController.SendSMS("reschedule", newAppointmentTime, selectedDoctor, patient);
         } else {
             System.out.println("Invalid appointment ID or not authorized to reschedule.");
         }
@@ -228,7 +228,7 @@ public class PatientAppointmentController {
                 System.out.println("Appointment canceled successfully.");
 
                 // Hiding the function until the day before presentation - since the my trial account got limited $$ to send SMS 
-                // SmsController.SendSMS("cancel", appointmentDateTime, selectedDoctor , patient);
+                SmsController.SendSMS("cancel", appointmentDateTime, selectedDoctor , patient);
                 break;
             }
         }
