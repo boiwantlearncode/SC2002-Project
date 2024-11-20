@@ -128,12 +128,16 @@ public class PharmacistController {
                 if (quantity < 0) {
                     throw new IOException("Quantity cannot be negative.");
                 }
-                ReplenishmentRequest replenishmentRequest = new ReplenishmentRequest(existingMedication, quantity, false);
+
                 ReplenishmentRequestRepo replenishmentRequestRepo = new ReplenishmentRequestRepo();
                 replenishmentRequestRepo.loadData();
-
                 List<ReplenishmentRequest> replenishmentRequests = replenishmentRequestRepo.getData();
+
+                String requestID = "REQ" + (replenishmentRequests.size() + 1);
+                ReplenishmentRequest replenishmentRequest = new ReplenishmentRequest(requestID, existingMedication, quantity, false);
                 replenishmentRequests.add(replenishmentRequest);
+
+                System.out.println("Replenishment request has been sent.");
                 replenishmentRequestRepo.setReplenishmentRequests(replenishmentRequests);
                 replenishmentRequestRepo.saveData();
             } catch (InputMismatchException e) {

@@ -18,7 +18,11 @@ git status
 
 ## Changelog
 
-### V3.4 (LATEST)
+### V3.5 (LATEST)
+- All classes in Models adhere to Models rules
+- Migrated creation of requestId e.g. REQ1 from Model->ReplenishmentRequest to Controller->PharmacistController 
+
+### V3.4 
 - Minor visual changes to main.java for printing of our homescreen
 
 ### V3.3

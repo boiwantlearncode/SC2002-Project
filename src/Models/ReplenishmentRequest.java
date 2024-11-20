@@ -54,21 +54,11 @@ public class ReplenishmentRequest implements Serializable {
      * @param approved   the approval status of the request.
      */
 
-    public ReplenishmentRequest(Medication medication, int quantity, boolean approved) {
-        ReplenishmentRequestRepo replenishmentRequests = new ReplenishmentRequestRepo();
-        List<ReplenishmentRequest> requests;
-        try {
-            replenishmentRequests.loadData();
-            requests = replenishmentRequests.getData();
-
-            this.id = "REQ" + (requests.size() + 1);
-            this.medication = medication;
-            this.quantity = quantity;
-            this.approved = approved;
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error creating replenishment request.");
-        }
-
+    public ReplenishmentRequest(String requestID, Medication medication, int quantity, boolean approved) {
+        this.id = requestID;
+        this.medication = medication;
+        this.quantity = quantity;
+        this.approved = approved;
     }
 
     /**
