@@ -14,9 +14,33 @@ import java.util.Map;
 
 import Controllers.AuthenticationController.PasswordController.PasswordController;
 
+/**
+ * The {@code UserRepo} class manages the persistence and retrieval of user data.
+ * This repository handles a list of {@code User} objects, including their storage in a file
+ * and retrieval from the file when the application starts.
+ *
+ * Implements the {@link SerializableRepo} interface for saving and loading data.
+ */
+
 public class UserRepo implements SerializableRepo<List<User>>{
+
+    /**
+     * The path to the file where user data is stored.
+     */
+    
     private static final String USERS_FILE = "src/DataManager/users.txt";
+
+    /**
+     * A list containing all users managed by this repository.
+     */
+    
     private List<User> users = new ArrayList<>();
+
+    /**
+     * Saves the current user data to the file specified by {@code USERS_FILE}.
+     *
+     * @throws IOException if an I/O error occurs while writing to the file.
+     */
 
     @Override
     public void saveData() throws IOException {
@@ -25,6 +49,16 @@ public class UserRepo implements SerializableRepo<List<User>>{
             //System.out.println("User data saved successfully.");
         }
     }
+
+    /**
+     * Loads user data from the file specified by {@code USERS_FILE}.
+     * If the file is empty, it populates it with initial data, including sample users such as
+     * a patient, a doctor, a pharmacist, and an administrator. Passwords are hashed and salted
+     * using the {@link PasswordController}.
+     *
+     * @throws IOException if an I/O error occurs while reading from the file or if hashing fails.
+     * @throws ClassNotFoundException if the class of a serialized object cannot be found.
+     */
 
     @Override
     public void loadData() throws IOException, ClassNotFoundException {
@@ -69,10 +103,22 @@ public class UserRepo implements SerializableRepo<List<User>>{
         }
     }
 
+    /**
+     * Retrieves the list of users managed by this repository.
+     *
+     * @return a {@link List} of {@link User} objects.
+     */
+
     @Override
     public List<User> getData() {
         return users;
     }
+
+    /**
+     * Sets the list of users managed by this repository.
+     *
+     * @param users a {@link List} of {@link User} objects to be managed.
+     */
 
     public void setUsers(List<User> users) {
         this.users = users;
