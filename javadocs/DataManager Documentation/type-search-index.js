@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"DataManager","l":"AppointmentsRepo"},{"p":"DataManager","l":"InventoryRepo"},{"p":"DataManager","l":"ReplenishmentRequestRepo"},{"p":"DataManager","l":"SerializableRepo"},{"p":"DataManager","l":"UserRepo"}];updateSearchResults();
