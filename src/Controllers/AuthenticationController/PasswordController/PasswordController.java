@@ -10,11 +10,20 @@ import java.util.List;
 import DataManager.UserRepo;
 import Models.User;
 
-// SHA256 hashing + Salt
-// A salt is a random value unique to each password that prevents attackers from using precomputed hashes (e.g., rainbow tables).
+/**
+ * The PasswordController class provides functionality for handling user password operations, 
+ * including hashing, validation, password changes, and password resets. 
+ * It uses SHA-256 hashing with salting for secure password management.
+ */
+
 public class PasswordController {
 
-    // Generate a random salt
+    /**
+     * Generates a random salt value to be used for password hashing.
+     *
+     * @return A Base64-encoded string representation of the generated salt.
+     */
+    
     public static String generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
@@ -22,7 +31,15 @@ public class PasswordController {
         return Base64.getEncoder().encodeToString(salt);
     }
 
-    // Hash a password with a given salt using SHA-256
+    /**
+     * Hashes a given password with a provided salt using the SHA-256 algorithm.
+     *
+     * @param password The plain-text password to hash.
+     * @param salt     The salt value to include in the hash.
+     * @return A Base64-encoded string representation of the hashed password.
+     * @throws NoSuchAlgorithmException If the SHA-256 algorithm is not available.
+     */
+    
     public static String hashPassword(String password, String salt) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(salt.getBytes()); // Include salt in the hash
@@ -30,14 +47,31 @@ public class PasswordController {
         return Base64.getEncoder().encodeToString(hashedPassword);
     }
 
-    // Validate a password against a hash
+    /**
+     * Validates a user-provided password against a stored hash and salt.
+     *
+     * @param inputPassword The plain-text password provided by the user.
+     * @param storedHash    The stored hashed password.
+     * @param storedSalt    The stored salt value.
+     * @return True if the hashed input password matches the stored hash, false otherwise.
+     * @throws NoSuchAlgorithmException If the SHA-256 algorithm is not available.
+     */
+    
     public static boolean validatePassword(String inputPassword, String storedHash, String storedSalt) 
             throws NoSuchAlgorithmException {
         String hashedInput = hashPassword(inputPassword, storedSalt);
         return hashedInput.equals(storedHash);
     }
 
-    // Change password
+    /**
+     * Changes the password for a user with a given user ID.
+     *
+     * @param newPassword The new password to set for the user.
+     * @param userID      The ID of the user whose password is being changed.
+     * @throws IOException            If an error occurs while saving data or the new password is invalid.
+     * @throws ClassNotFoundException If an error occurs while loading user data.
+     */
+    
     public void changePassword(String newPassword, String userID) throws IOException, ClassNotFoundException {
         // Check if valid password condition
         if (newPassword == null || newPassword.isEmpty()) {
@@ -66,6 +100,15 @@ public class PasswordController {
         }
         System.out.println("Password successfully changed.");
     }
+
+    /**
+     * Resets the password for a user with a given user ID to a default password.
+     * The default password is set to "password".
+     *
+     * @param userID The ID of the user whose password is being reset.
+     * @throws IOException            If an error occurs while saving data.
+     * @throws ClassNotFoundException If an error occurs while loading user data.
+     */
 
     public static void resetPassword(String userID) throws IOException, ClassNotFoundException {
         UserRepo userRepo = new UserRepo();
