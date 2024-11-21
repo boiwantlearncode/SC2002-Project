@@ -10,8 +10,24 @@ import java.util.Base64;
 import Models.Doctor;
 import Models.Patient;
 
-// Note that the SMS will ONLY be sent through if patient.getPhoneNumber() is verified on Twilio's console since we are using the TRIAL version.
+/**
+ * The SmsController class provides functionality to send SMS notifications to patients
+ * regarding their appointment schedule, rescheduling, or cancellations using the Twilio API.
+ * <p>
+ * Note: This implementation uses the Twilio trial version, so the recipient's phone number
+ * must be verified in Twilio's console for the SMS to be successfully sent.
+ */
+
 public class SmsController {
+
+    /**
+     * Sends an SMS to a patient regarding their appointment details.
+     *
+     * @param appointmentType     The type of appointment operation ("schedule", "reschedule", or "cancel").
+     * @param appointmentDateTime The date and time of the appointment.
+     * @param doctor              The doctor associated with the appointment.
+     * @param patient             The patient receiving the appointment notification.
+     */
 
     public static void SendSMS(String appointmentType, LocalDateTime appointmentDateTime, Doctor doctor, Patient patient) {
         try {
