@@ -1,6 +1,0 @@
-Controllers.AdministratorController
-Controllers.DoctorController
-Controllers.PatientController
-Controllers.PharmacistController
-Controllers.ProcessOptions
-Controllers.ShowOptions

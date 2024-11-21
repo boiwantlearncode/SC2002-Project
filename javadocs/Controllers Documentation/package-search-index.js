@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"Controllers.AdministratorController"},{"l":"Controllers.DoctorController"},{"l":"Controllers.PatientController"},{"l":"Controllers.PharmacistController"},{"l":"Controllers.ProcessOptions"},{"l":"Controllers.ShowOptions"}];updateSearchResults();
