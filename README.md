@@ -1,8 +1,18 @@
 # Table of Contents
-1. Best practices
-2. Changelog
+1. How to set up
+2. Additional notes
+3. Guideline for contributors
+4. Changelog
 
-## Best practices
+## How to set up
+1. Ensure all .txt files inside DataManager are empty before running the program
+2. Access javadocs documents inside /javadocs directory
+
+## Additional notes
+1. Patient can only make appointment for timeslots in the future
+2. Doctor can only write appointment outcome record for appointment with status "Confirmed" and in the past
+
+## Guideline for contributors
 
 1. Pull from remote repository before pushing changes to ensure up-to-date version.
 ```bash
